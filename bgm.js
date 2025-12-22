@@ -1,133 +1,61 @@
-// bgm.js
+// bgm.js —— 進站一次點擊，之後全站自動播放
 (function () {
-  const KEY_ENABLED = "bgm_enabled";   // 是否要播放（使用者按過播放）
-  const KEY_TIME = "bgm_time";         // 記住播放秒數
-  const KEY_VOL = "bgm_volume";        // 音量
-  const KEY_MUTED = "bgm_muted";       // 靜音
+  const KEY_ALLOWED = "HDS_BGM_ALLOWED"; // 是否已授權播放
+  const KEY_TIME = "HDS_BGM_TIME";       // 播放秒數
+  const KEY_VOL = "HDS_BGM_VOL";
+  const KEY_MUTED = "HDS_BGM_MUTED";
 
   const audio = new Audio("bgm.mp3");
   audio.loop = true;
+  audio.preload = "auto";
 
-  // 讀取設定
-  const savedVol = localStorage.getItem(KEY_VOL);
-  const savedMuted = localStorage.getItem(KEY_MUTED);
-  const savedTime = localStorage.getItem(KEY_TIME);
+  // === 讀取設定 ===
+  audio.volume = Number(localStorage.getItem(KEY_VOL)) || 0.5;
+  audio.muted = localStorage.getItem(KEY_MUTED) === "1";
 
-  audio.volume = savedVol !== null ? Number(savedVol) : 0.5;
-  audio.muted = savedMuted === "1";
-
-  if (savedTime !== null && !Number.isNaN(Number(savedTime))) {
-    audio.currentTime = Math.max(0, Number(savedTime));
+  const savedTime = Number(localStorage.getItem(KEY_TIME));
+  if (!Number.isNaN(savedTime)) {
+    audio.currentTime = savedTime;
   }
 
-  // 讓頁面上的控制面板可以抓到
+  // 讓頁面控制 UI 可以抓
   window.__bgmAudio = audio;
 
-  // ---------- UI 控制（如果頁面有放浮標） ----------
-  const btn = document.getElementById("bgmBtn");
-  const menu = document.getElementById("bgmMenu");
-  const toggleBtn = document.getElementById("bgmToggle");
-  const muteBtn = document.getElementById("bgmMute");
-  const vol = document.getElementById("bgmVolume");
-
-  function setMenu(open) {
-    if (!menu) return;
-    menu.classList.toggle("open", open);
-    menu.setAttribute("aria-hidden", String(!open));
-  }
-
-  function refreshUI() {
-    if (toggleBtn) toggleBtn.textContent = audio.paused ? "▶️ 播放" : "⏸ 暫停";
-    if (muteBtn) muteBtn.textContent = audio.muted ? "🔈 取消靜音" : "🔇 靜音";
-    if (vol) vol.value = String(audio.volume);
-  }
-
-  if (btn && menu) {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      setMenu(!menu.classList.contains("open"));
-    });
-    document.addEventListener("click", () => setMenu(false));
-  }
-
-  if (toggleBtn) {
-    toggleBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      if (audio.paused) {
-        localStorage.setItem(KEY_ENABLED, "1");
-        audio.play().catch(() => {});
-      } else {
-        localStorage.setItem(KEY_ENABLED, "0");
-        audio.pause();
-      }
-      refreshUI();
+  // === 嘗試自動播放（已授權的情況） ===
+  function tryAutoPlay() {
+    audio.play().catch(() => {
+      // 若仍被擋，等下一次互動
     });
   }
 
-  if (muteBtn) {
-    muteBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      audio.muted = !audio.muted;
-      localStorage.setItem(KEY_MUTED, audio.muted ? "1" : "0");
-      refreshUI();
-    });
+  if (localStorage.getItem(KEY_ALLOWED) === "1") {
+    // 曾經點過 → 直接嘗試自動播放
+    window.addEventListener("load", tryAutoPlay);
   }
 
-  if (vol) {
-    vol.addEventListener("input", () => {
-      audio.volume = Number(vol.value);
-      localStorage.setItem(KEY_VOL, String(audio.volume));
-      if (audio.volume === 0) {
-        audio.muted = true;
-        localStorage.setItem(KEY_MUTED, "1");
-      }
-      refreshUI();
-    });
+  // === 第一次互動授權播放 ===
+  function firstInteraction() {
+    localStorage.setItem(KEY_ALLOWED, "1");
+    tryAutoPlay();
+
+    window.removeEventListener("click", firstInteraction, true);
+    window.removeEventListener("touchstart", firstInteraction, true);
+    window.removeEventListener("keydown", firstInteraction, true);
+    window.removeEventListener("wheel", firstInteraction, true);
   }
 
-  // ---------- 記住播放秒數（切頁接續用） ----------
-  function saveTime() {
-    try { localStorage.setItem(KEY_TIME, String(audio.currentTime || 0)); } catch (e) {}
-  }
-  setInterval(saveTime, 700);
-  window.addEventListener("beforeunload", saveTime);
+  window.addEventListener("click", firstInteraction, true);
+  window.addEventListener("touchstart", firstInteraction, true);
+  window.addEventListener("keydown", firstInteraction, true);
+  window.addEventListener("wheel", firstInteraction, true);
 
-  // ---------- 自動接續播放（盡量不中斷） ----------
-  // 如果使用者之前按過「播放」，下一頁就會嘗試自動播放；
-  // 若瀏覽器仍要求互動，就等下一次點/觸控/滾動再啟動
-  let started = false;
-
-  function tryPlay() {
-    if (started) return;
-    started = true;
-
-    audio.play().then(() => {
-      refreshUI();
-    }).catch(() => {
-      started = false; // 被擋就再等下一次互動
-    });
+  // === 記住狀態（切頁用） ===
+  function saveState() {
+    localStorage.setItem(KEY_TIME, audio.currentTime || 0);
+    localStorage.setItem(KEY_VOL, audio.volume);
+    localStorage.setItem(KEY_MUTED, audio.muted ? "1" : "0");
   }
 
-  // 如果之前是「播放狀態」，直接嘗試一次
-  const enabled = localStorage.getItem(KEY_ENABLED) === "1";
-  if (enabled) {
-    // 先嘗試在 load 後播放（有些瀏覽器在同站點互動後會放行）
-    window.addEventListener("load", () => {
-      tryPlay();
-      refreshUI();
-    });
-  } else {
-    refreshUI();
-  }
-
-  // ✅ 任意互動啟動（含你說的滾動）
-  function startOnGesture() {
-    if (localStorage.getItem(KEY_ENABLED) !== "1") return; // 使用者沒按播放就不強制
-    tryPlay();
-  }
-
-  window.addEventListener("click", startOnGesture, true);
-  window.addEventListener("touchstart", startOnGesture, true);
-  window.addEventListener("keydown", startOnGesture, true);
-  window.addEventListener("wheel", startOnGesture, true);
+  setInterval(saveState, 800);
+  window.addEventListener("beforeunload", saveState);
 })();
