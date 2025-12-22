@@ -9,30 +9,30 @@
 
 <body>
 
-<!-- ✅ BGM：無控制列，loop -->
-<audio id="bgm" src="bgm.mp3" loop preload="auto" playsinline></audio>
+<!-- ✅ BGM：不顯示控制列（不用播放鍵/靜音/音量） -->
+<audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
 
 <aside>
   <h2>Healing Dessert Studio</h2>
   <p class="slogan">奶油甜點・療癒日常</p>
 
-  <nav id="sideNav">
-    <a href="index.html" data-page="index.html">🏠 首頁</a>
-    <a href="about.html" data-page="about.html">📖 公司起源</a>
-    <a href="giftbox.html" data-page="giftbox.html">🎁 甜點禮盒</a>
-    <a href="mood.html" data-page="mood.html">😊 心情選單</a>
-    <a href="colors.html" data-page="colors.html">🌈 色彩療癒</a>
-    <a href="cakes.html" data-page="cakes.html">🍰 奶油蛋糕</a>
-    <a href="cookies.html" data-page="cookies.html">🍪 奶油餅乾</a>
-    <a href="pastries.html" data-page="pastries.html">🧁 奶油派塔</a>
-    <a href="drinks.html" data-page="drinks.html">☕ 奶油飲品</a>
-    <a href="workshop.html" data-page="workshop.html">📚 工作坊預約</a>
-    <a href="order.html" data-page="order.html">🛒 線上訂購</a>
-    <a href="source.html" data-page="source.html">🌿 品質來源</a>
-    <a href="award.html" data-page="award.html">🏆 榮獲獎項</a>
-    <a href="trace.html" data-page="trace.html">🌾 供應商溯源</a>
-    <a href="report.html" data-page="report.html">📋 檢驗報告</a>
-    <a href="contactus.html" data-page="contactus.html">✉️ 聯繫我們</a>
+  <nav>
+    <a href="index.html">🏠 首頁</a>
+    <a href="about.html">📖 公司起源</a>
+    <a href="giftbox.html">🎁 甜點禮盒</a>
+    <a href="mood.html">😊 心情選單</a>
+    <a href="colors.html">🌈 色彩療癒</a>
+    <a href="cakes.html">🍰 奶油蛋糕</a>
+    <a href="cookies.html">🍪 奶油餅乾</a>
+    <a href="pastries.html">🧁 奶油派塔</a>
+    <a href="drinks.html">☕ 奶油飲品</a>
+    <a href="workshop.html">📚 工作坊預約</a>
+    <a href="order.html">🛒 線上訂購</a>
+    <a href="source.html">🌿 品質來源</a>
+    <a href="award.html">🏆 榮獲獎項</a>
+    <a href="trace.html">🌾 供應商溯源</a>
+    <a href="report.html">📋 檢驗報告</a>
+    <a href="contactus.html">✉️ 聯繫我們</a>
   </nav>
 </aside>
 
@@ -43,35 +43,33 @@
   <p class="tagline">用一份甜點，慢慢照顧你的心</p>
 </header>
 
-<!-- ✅ 這裡加一個可替換內容的容器：之後點選單就換這裡，不換頁 -->
-<main id="appMain">
+<main>
 
-  <!-- 你原本的首頁內容 그대로 -->
-  <section class="block">
-    <h1>療癒系甜點品牌</h1>
-    <div class="content">
-      Healing Dessert Studio 是一間以「情緒療癒」為核心的甜點工作室，
-      希望透過溫柔的味道與色彩，陪伴每一段需要被安放的日常時光。
-    </div>
-  </section>
+<section class="block">
+  <h1>療癒系甜點品牌</h1>
+  <div class="content">
+    Healing Dessert Studio 是一間以「情緒療癒」為核心的甜點工作室，
+    希望透過溫柔的味道與色彩，陪伴每一段需要被安放的日常時光。
+  </div>
+</section>
 
-  <section class="cards">
-    <div class="card">
-      <h2>心情選單</h2>
-      <p>依照情緒狀態，選擇適合你的甜點。</p>
-      <a href="mood.html" data-page="mood.html">前往查看 →</a>
-    </div>
-    <div class="card">
-      <h2>熱門甜點</h2>
-      <p>最受歡迎的經典療癒甜點。</p>
-      <a href="cakes.html" data-page="cakes.html">前往查看 →</a>
-    </div>
-    <div class="card">
-      <h2>甜點工作坊</h2>
-      <p>透過手作，讓心慢慢靜下來。</p>
-      <a href="workshop.html" data-page="workshop.html">立即預約 →</a>
-    </div>
-  </section>
+<section class="cards">
+  <div class="card">
+    <h2>心情選單</h2>
+    <p>依照情緒狀態，選擇適合你的甜點。</p>
+    <a href="mood.html">前往查看 →</a>
+  </div>
+  <div class="card">
+    <h2>熱門甜點</h2>
+    <p>最受歡迎的經典療癒甜點。</p>
+    <a href="cakes.html">前往查看 →</a>
+  </div>
+  <div class="card">
+    <h2>甜點工作坊</h2>
+    <p>透過手作，讓心慢慢靜下來。</p>
+    <a href="workshop.html">立即預約 →</a>
+  </div>
+</section>
 
 </main>
 
@@ -81,82 +79,8 @@
 
 </div>
 
-<!-- ✅ 你的 bgm.js（你說你已改好） -->
-<script src="bgm.js"></script>
-
-<!-- ✅ 單頁載入器：攔截點選單，不跳頁，抓其他頁面的 <main> 內容換進來 -->
-<script>
-  const mainEl = document.getElementById('appMain');
-  const navEl = document.getElementById('sideNav');
-
-  function setActiveLink(targetPage) {
-    const links = navEl.querySelectorAll('a[data-page]');
-    links.forEach(a => {
-      if (a.dataset.page === targetPage) a.style.backgroundColor = '#ffe8d8';
-      else a.style.backgroundColor = '';
-    });
-  }
-
-  async function loadPage(page) {
-    // 首頁：直接回到原本首頁內容（不 fetch）
-    if (page === 'index.html') {
-      window.history.pushState({ page }, '', 'index.html');
-      setActiveLink('index.html');
-      return;
-    }
-
-    try {
-      const res = await fetch(page, { cache: 'no-store' });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-
-      const html = await res.text();
-      const doc = new DOMParser().parseFromString(html, 'text/html');
-
-      // ✅ 把對方頁面的 <main> 抓出來（你其他頁面如果也是用 <main> 包內容，這樣就會成功）
-      const newMain = doc.querySelector('main');
-      if (!newMain) throw new Error('找不到 <main>，請確認 ' + page + ' 有 <main> 包內容');
-
-      mainEl.innerHTML = newMain.innerHTML;
-
-      window.history.pushState({ page }, '', '#' + page);
-      setActiveLink(page);
-
-      // 每次換內容後，捲到上面比較舒服
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    } catch (err) {
-      mainEl.innerHTML = `
-        <section class="block">
-          <h1>頁面載入失敗</h1>
-          <div class="content">找不到或無法載入：${page}<br>(${err.message})</div>
-        </section>
-      `;
-    }
-  }
-
-  // 攔截側邊選單 & 卡片連結（所有有 data-page 的）
-  document.addEventListener('click', (e) => {
-    const a = e.target.closest('a[data-page]');
-    if (!a) return;
-
-    e.preventDefault();
-    const page = a.dataset.page;
-    loadPage(page);
-  });
-
-  // 支援上一頁/下一頁
-  window.addEventListener('popstate', (e) => {
-    const page = (e.state && e.state.page) ? e.state.page : (location.hash ? location.hash.slice(1) : 'index.html');
-    loadPage(page);
-  });
-
-  // 如果使用者直接進 index.html#about.html 這種，也能載入
-  window.addEventListener('DOMContentLoaded', () => {
-    const page = location.hash ? location.hash.slice(1) : 'index.html';
-    if (page && page !== 'index.html') loadPage(page);
-    setActiveLink(page || 'index.html');
-  });
-</script>
+<!-- ✅ BGM 控制腳本（你說你已改好 bgm.js，就放這行就好） -->
+<script src="bgm.js" defer></script>
 
 </body>
 </html>
