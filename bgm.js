@@ -1,117 +1,136 @@
-// bgm.js
 (() => {
-  const BGM_SRC = "bgm.mp3";
-  const STORAGE_KEY = "bgm_enabled"; // 記住使用者選擇（跨頁）
+  const audio = document.getElementById("bgm");
+  const widget = document.getElementById("bgmWidget");
+  const btn = document.getElementById("bgmBtn");
+  const menu = document.getElementById("bgmMenu");
+  const toggleBtn = document.getElementById("bgmToggle");
+  const volumeSlider = document.getElementById("bgmVolume");
 
-  // 建立 audio（不顯示控制鍵）
-  const audio = new Audio(BGM_SRC);
-  audio.loop = true;
-  audio.preload = "auto";
-  audio.volume = 0.5;
+  if (!audio || !widget || !btn || !menu || !toggleBtn || !volumeSlider) return;
 
-  // 狀態
-  let enabled = sessionStorage.getItem(STORAGE_KEY) === "1";
-  let startedOnce = false;
+  // ====== 讀取偏好（跨頁記住） ======
+  const savedVol = localStorage.getItem("bgmVolume");
+  const savedState = localStorage.getItem("bgmState"); // "playing" | "paused"
 
-  // ============ UI：浮動音樂按鈕（像你圖那種） ============
-  const wrap = document.createElement("div");
-  wrap.className = "bgm-fab-wrap";
-  wrap.innerHTML = `
-    <div class="bgm-fab" id="bgmFab" aria-label="背景音樂">
-      <div class="bgm-icon" id="bgmIcon">♫</div>
-      <div class="bgm-caret" id="bgmCaret">▾</div>
-    </div>
-    <div class="bgm-menu" id="bgmMenu">
-      <button type="button" id="bgmPlay">開啟音樂</button>
-      <button type="button" id="bgmStop">關閉音樂</button>
-    </div>
-  `;
-  document.addEventListener("DOMContentLoaded", () => {
-    document.body.appendChild(wrap);
-
-    const fab = document.getElementById("bgmFab");
-    const menu = document.getElementById("bgmMenu");
-    const playBtn = document.getElementById("bgmPlay");
-    const stopBtn = document.getElementById("bgmStop");
-    const caret = document.getElementById("bgmCaret");
-
-    // 展開/收起 menu（點 caret 或整個按鈕都可以）
-    fab.addEventListener("click", (e) => {
-      e.stopPropagation();
-      menu.classList.toggle("show");
-      caret.textContent = menu.classList.contains("show") ? "▴" : "▾";
-    });
-
-    // 點空白處關閉
-    document.addEventListener("click", () => {
-      menu.classList.remove("show");
-      caret.textContent = "▾";
-    });
-
-    // 手動開/關
-    playBtn.addEventListener("click", async (e) => {
-      e.stopPropagation();
-      enabled = true;
-      sessionStorage.setItem(STORAGE_KEY, "1");
-      await safePlay();
-      menu.classList.remove("show");
-      caret.textContent = "▾";
-    });
-
-    stopBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      enabled = false;
-      sessionStorage.setItem(STORAGE_KEY, "0");
-      safePause();
-      menu.classList.remove("show");
-      caret.textContent = "▾";
-    });
-
-    // 如果使用者上一頁已經開啟過音樂：這一頁「等到第一次互動」就自動播
-    if (enabled) armFirstGestureAutoplay();
-  });
-
-  // ============ 核心：使用者第一次互動才允許播放 ============
-  function armFirstGestureAutoplay() {
-    if (startedOnce) return;
-
-    const handler = async () => {
-      startedOnce = true;
-      remove();
-      await safePlay();
-    };
-
-    const remove = () => {
-      window.removeEventListener("pointerdown", handler);
-      window.removeEventListener("touchstart", handler);
-      window.removeEventListener("keydown", handler);
-      window.removeEventListener("wheel", handler, { passive: true });
-      window.removeEventListener("scroll", handler, { passive: true });
-    };
-
-    // ✅ 你要的：點一下 / 觸控 / 鍵盤 / 滾輪 / 滾動都算
-    window.addEventListener("pointerdown", handler, { once: true });
-    window.addEventListener("touchstart", handler, { once: true });
-    window.addEventListener("keydown", handler, { once: true });
-    window.addEventListener("wheel", handler, { passive: true, once: true });
-    window.addEventListener("scroll", handler, { passive: true, once: true });
+  if (savedVol !== null) {
+    const v = Math.max(0, Math.min(1, parseFloat(savedVol)));
+    audio.volume = isNaN(v) ? 0.5 : v;
+    volumeSlider.value = audio.volume;
+  } else {
+    audio.volume = 0.5;
+    volumeSlider.value = 0.5;
   }
 
-  async function safePlay() {
-    try {
-      if (!enabled) return;
-      await audio.play();
-    } catch (err) {
-      // 有些瀏覽器/狀況仍會擋，沒關係，下一次互動會再觸發
-      startedOnce = false;
-      armFirstGestureAutoplay();
+  // ====== UI 更新 ======
+  function syncToggleText() {
+    if (!audio.paused) {
+      toggleBtn.textContent = "⏸ 暫停";
+      localStorage.setItem("bgmState", "playing");
+    } else {
+      toggleBtn.textContent = "▶︎ 播放";
+      localStorage.setItem("bgmState", "paused");
     }
   }
 
-  function safePause() {
+  // ====== 播放（可能被瀏覽器擋） ======
+  async function tryPlay() {
     try {
-      audio.pause();
-      audio.currentTime = 0;
-    } catch (e) {}
+      await audio.play();
+      syncToggleText();
+      return true;
+    } catch (e) {
+      // 需要使用者互動才可播放
+      syncToggleText();
+      return false;
+    }
+  }
+
+  function pause() {
+    audio.pause();
+    syncToggleText();
+  }
+
+  // ====== 第一次互動觸發播放 ======
+  let hasStartedOnce = localStorage.getItem("bgmStarted") === "1";
+
+  async function onFirstGesture() {
+    // 如果使用者希望是播放狀態，就在第一次互動試著播
+    const wantPlaying = (localStorage.getItem("bgmState") || "playing") === "playing";
+
+    if (wantPlaying) {
+      const ok = await tryPlay();
+      if (ok) {
+        localStorage.setItem("bgmStarted", "1");
+        hasStartedOnce = true;
+      }
+    }
+
+    window.removeEventListener("click", onFirstGesture, { capture: true });
+    window.removeEventListener("touchstart", onFirstGesture, { capture: true });
+    window.removeEventListener("scroll", onFirstGesture, { capture: true });
+    window.removeEventListener("keydown", onFirstGesture, { capture: true });
+  }
+
+  // 註冊「任意互動」
+  window.addEventListener("click", onFirstGesture, { capture: true, passive: true });
+  window.addEventListener("touchstart", onFirstGesture, { capture: true, passive: true });
+  window.addEventListener("scroll", onFirstGesture, { capture: true, passive: true });
+  window.addEventListener("keydown", onFirstGesture, { capture: true });
+
+  // 若已經在上一頁互動過，這一頁先「嘗試」自動接上（成功就直接播；失敗就等互動）
+  (async () => {
+    const wantPlaying = (localStorage.getItem("bgmState") || "playing") === "playing";
+    if (hasStartedOnce && wantPlaying) {
+      await tryPlay();
+    } else {
+      syncToggleText();
+    }
+  })();
+
+  // ====== 下拉選單開關 ======
+  function closeMenu() {
+    widget.classList.remove("open");
+    menu.setAttribute("aria-hidden", "true");
+  }
+
+  function toggleMenu() {
+    widget.classList.toggle("open");
+    menu.setAttribute("aria-hidden", widget.classList.contains("open") ? "false" : "true");
+  }
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  document.addEventListener("click", () => closeMenu());
+
+  // ====== 播放/暫停按鈕 ======
+  toggleBtn.addEventListener("click", async (e) => {
+    e.stopPropagation();
+    if (audio.paused) {
+      const ok = await tryPlay();
+      if (ok) {
+        localStorage.setItem("bgmStarted", "1");
+        hasStartedOnce = true;
+      }
+    } else {
+      pause();
+    }
+  });
+
+  // ====== 音量 ======
+  volumeSlider.addEventListener("input", (e) => {
+    const v = parseFloat(e.target.value);
+    audio.volume = isNaN(v) ? 0.5 : v;
+    localStorage.setItem("bgmVolume", String(audio.volume));
+  });
+
+  // 初始文字
+  // 若使用者上次選擇 paused，就保持 paused
+  if ((savedState || "playing") === "paused") {
+    pause();
+  } else {
+    syncToggleText();
   }
 })();
