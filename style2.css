@@ -297,3 +297,89 @@ footer {
     bottom: 14px;
   }
 }
+/* =====================
+   右上角 BGM 小按鈕＋下拉選單（像你圖一那樣）
+===================== */
+.bgm-widget{
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 9999;
+}
+
+.bgm-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid #eadfd4;
+  background: rgba(255, 246, 236, 0.92);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #6b4f3f;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.bgm-btn:hover{
+  background: rgba(255, 232, 216, 0.95);
+}
+
+.bgm-arrow{
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.bgm-menu{
+  margin-top: 8px;
+  width: 180px;
+  border: 1px solid #eadfd4;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(6px);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.10);
+  display: none;
+}
+
+.bgm-widget.open .bgm-menu{
+  display: block;
+}
+
+.bgm-item{
+  width: 100%;
+  text-align: left;
+  padding: 12px 12px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  color: #4a3f35;
+}
+
+.bgm-item:hover{
+  background: #fff3e6;
+}
+
+.bgm-divider{
+  height: 1px;
+  background: #eadfd4;
+}
+
+.bgm-row{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px;
+}
+
+.bgm-label{
+  font-size: 13px;
+  color: #6b5a4a;
+  white-space: nowrap;
+}
+
+.bgm-volume{
+  width: 100%;
+}
