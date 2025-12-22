@@ -1,7 +1,9 @@
 /* =====================
    全站基礎設定
 ===================== */
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -11,8 +13,14 @@ body {
   line-height: 1.8;
 }
 
-a { text-decoration: none; color: #6b4f3f; }
-a:hover { color: #c0896f; }
+a {
+  text-decoration: none;
+  color: #6b4f3f;
+}
+
+a:hover {
+  color: #c0896f;
+}
 
 /* =====================
    側邊選單 Aside
@@ -48,7 +56,9 @@ aside nav a {
   border-radius: 8px;
 }
 
-aside nav a:hover { background-color: #ffe8d8; }
+aside nav a:hover {
+  background-color: #ffe8d8;
+}
 
 /* =====================
    主容器
@@ -89,24 +99,6 @@ main {
   max-width: 1100px;
   margin: 0 auto;
   padding: 40px 20px;
-}
-
-/* =====================
-   頁首大圖（固定 16:9）
-===================== */
-.page-image {
-  width: 100%;
-  margin-bottom: 40px;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-}
-
-.page-image img {
-  width: 100%;
-  display: block;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
 }
 
 /* =====================
@@ -155,7 +147,7 @@ main {
   box-shadow: 0 14px 30px rgba(0,0,0,0.08);
 }
 
-.card h2, .card h3 {
+.card h2 {
   margin-top: 0;
   color: #f4a07a;
 }
@@ -163,16 +155,6 @@ main {
 .card p {
   font-size: 0.95rem;
   color: #6b5a4a;
-}
-
-/* 卡片圖片：固定 4:3 */
-.card-img {
-  width: 100%;
-  display: block;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 16px;
-  margin-bottom: 14px;
 }
 
 /* =====================
@@ -187,199 +169,122 @@ footer {
 }
 
 /* =====================
-   ✅ BGM 浮動按鈕（像你圖那種）
-   - 小方塊、音符、右邊小箭頭
-   - 點一下就播（由 bgm.js 控制）
+   🎵 BGM 音符按鈕（右下角）
 ===================== */
-.bgm-fab-wrap {
+.bgm-fab {
   position: fixed;
-  right: 22px;
-  bottom: 22px;
+  left: 260px;           /* 避開左側選單 */
+  bottom: 20px;
+  margin-left: 20px;
   z-index: 9999;
 }
 
-.bgm-fab {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid #eadfd4;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 10px 12px;
-  border-radius: 14px;
-  box-shadow: 0 10px 24px rgba(0,0,0,0.10);
-  cursor: pointer;
-  user-select: none;
+@media (max-width: 600px) {
+  .bgm-fab {
+    left: 16px;
+    margin-left: 0;
+  }
 }
 
-.bgm-fab:active { transform: translateY(1px); }
-
-.bgm-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
-  background: #fff3e6;
+.bgm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 14px;
   border: 1px solid #eadfd4;
-  font-size: 18px;
+  background-color: #fff6ec;
+  color: #8b6a55;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 .bgm-caret {
-  font-size: 14px;
-  opacity: 0.75;
+  font-size: 12px;
+  opacity: 0.7;
 }
 
 .bgm-menu {
-  position: absolute;
-  right: 0;
-  bottom: 54px;
-  min-width: 160px;
-  border-radius: 14px;
+  margin-top: 10px;
+  width: 220px;
+  background-color: #ffffff;
   border: 1px solid #eadfd4;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 12px 26px rgba(0,0,0,0.12);
-  overflow: hidden;
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.1);
   display: none;
 }
 
-.bgm-menu button {
+.bgm-menu.open {
+  display: block;
+}
+
+.bgm-item {
   width: 100%;
-  text-align: left;
-  border: 0;
+  padding: 10px 12px;
   background: transparent;
-  padding: 12px 14px;
-  cursor: pointer;
-  font-size: 0.95rem;
+  border: none;
+  text-align: left;
+  font-size: 14px;
   color: #4a3f35;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-.bgm-menu button:hover {
-  background: #ffe8d8;
+.bgm-item:hover {
+  background-color: #fff3e6;
 }
 
-.bgm-menu.show { display: block; }
+.bgm-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.bgm-label {
+  font-size: 13px;
+  color: #6b5a4a;
+  width: 42px;
+}
+
+.bgm-range {
+  width: 100%;
+}
 
 .bgm-hint {
-  position: absolute;
-  right: 0;
-  bottom: 58px;
-  background: rgba(0,0,0,0.65);
-  color: #fff;
-  padding: 8px 10px;
-  border-radius: 10px;
-  font-size: 0.85rem;
-  display: none;
+  font-size: 12px;
+  color: #a58c7a;
+  padding: 6px 10px 0;
+  line-height: 1.4;
 }
 
 /* =====================
    RWD
 ===================== */
 @media (max-width: 900px) {
-  .card { flex: 1 1 calc(50% - 12px); }
+  .card {
+    flex: 1 1 calc(50% - 12px);
+  }
 }
 
 @media (max-width: 600px) {
+  .container {
+    margin-left: 0;
+  }
+
   aside {
     position: relative;
     width: 100%;
     height: auto;
   }
-  .container { margin-left: 0; }
-  header h1 { font-size: 1.8rem; }
-  .card { flex: 1 1 100%; }
 
-  .bgm-fab-wrap {
-    right: 14px;
-    bottom: 14px;
+  header h1 {
+    font-size: 1.8rem;
   }
-}
-/* =====================
-   右上角 BGM 小按鈕＋下拉選單（像你圖一那樣）
-===================== */
-.bgm-widget{
-  position: fixed;
-  top: 14px;
-  right: 14px;
-  z-index: 9999;
-}
 
-.bgm-btn{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border: 1px solid #eadfd4;
-  background: rgba(255, 246, 236, 0.92);
-  backdrop-filter: blur(6px);
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 16px;
-  color: #6b4f3f;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.bgm-btn:hover{
-  background: rgba(255, 232, 216, 0.95);
-}
-
-.bgm-arrow{
-  font-size: 12px;
-  opacity: 0.75;
-}
-
-.bgm-menu{
-  margin-top: 8px;
-  width: 180px;
-  border: 1px solid #eadfd4;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(6px);
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.10);
-  display: none;
-}
-
-.bgm-widget.open .bgm-menu{
-  display: block;
-}
-
-.bgm-item{
-  width: 100%;
-  text-align: left;
-  padding: 12px 12px;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  font-size: 14px;
-  color: #4a3f35;
-}
-
-.bgm-item:hover{
-  background: #fff3e6;
-}
-
-.bgm-divider{
-  height: 1px;
-  background: #eadfd4;
-}
-
-.bgm-row{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 12px;
-}
-
-.bgm-label{
-  font-size: 13px;
-  color: #6b5a4a;
-  white-space: nowrap;
-}
-
-.bgm-volume{
-  width: 100%;
+  .card {
+    flex: 1 1 100%;
+  }
 }
