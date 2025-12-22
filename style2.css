@@ -3,10 +3,6 @@
 ===================== */
 * { box-sizing: border-box; }
 
-html, body {
-  height: 100%;
-}
-
 body {
   margin: 0;
   font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
@@ -31,7 +27,6 @@ aside {
   padding: 20px;
   border-right: 1px solid #eadfd4;
   overflow-y: auto;
-  z-index: 10; /* 保持在內容上方，但不會蓋掉右下角按鈕 */
 }
 
 aside h2 {
@@ -86,4 +81,227 @@ header .tagline {
   color: #a58c7a;
 }
 
-/* =======*
+/* =====================
+   Main
+===================== */
+main {
+  flex: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* =====================
+   頁首大圖（固定 16:9）
+===================== */
+.page-image {
+  width: 100%;
+  margin-bottom: 40px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.page-image img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* =====================
+   白色內容卡片
+===================== */
+.block {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.block h1 {
+  margin-top: 0;
+  font-size: 1.6rem;
+  color: #8b7355;
+}
+
+.content {
+  font-size: 1.05rem;
+  color: #6b5a4a;
+}
+
+/* =====================
+   Cards 區塊
+===================== */
+.cards {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
+  flex: 1 1 calc(33.333% - 16px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.08);
+}
+
+.card h2, .card h3 {
+  margin-top: 0;
+  color: #f4a07a;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #6b5a4a;
+}
+
+/* 卡片圖片：固定 4:3 */
+.card-img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 14px;
+}
+
+/* =====================
+   Footer
+===================== */
+footer {
+  background-color: #fff3e6;
+  text-align: center;
+  padding: 24px 16px;
+  font-size: 0.9rem;
+  color: #8b6a55;
+}
+
+/* =====================
+   RWD
+===================== */
+@media (max-width: 900px) {
+  .card { flex: 1 1 calc(50% - 12px); }
+}
+
+@media (max-width: 600px) {
+  aside {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  .container { margin-left: 0; }
+  header h1 { font-size: 1.8rem; }
+  .card { flex: 1 1 100%; }
+}
+
+/* =========================================================
+   ✅ BGM 浮動按鈕（只影響 .bgm-*，不會動到你的版面）
+   目標：長得像你截圖那種「小圓角方塊 + 音符 + 下拉」
+========================================================= */
+.bgm-fab{
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 9999;          /* 讓它永遠在最上層 */
+  pointer-events: auto;
+}
+
+/* 外層按鈕：小圓角方塊 */
+.bgm-btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 0;
+  cursor: pointer;
+  border-radius: 16px;
+  background: rgba(255, 246, 236, 0.95);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+  color: #6b4f3f;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.bgm-btn:active{
+  transform: translateY(1px);
+}
+
+.bgm-caret{
+  font-size: 14px;
+  opacity: .7;
+}
+
+/* 下拉選單 */
+.bgm-menu{
+  position: absolute;
+  right: 0;
+  bottom: 56px;
+  width: 220px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.15);
+  padding: 10px;
+  border: 1px solid #f0e3d8;
+
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: .18s ease;
+}
+
+.bgm-menu.open{
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.bgm-item{
+  width: 100%;
+  padding: 10px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  color: #4a3f35;
+}
+
+.bgm-item:hover{
+  background: #fff3e6;
+}
+
+.bgm-row{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px 6px;
+}
+
+.bgm-label{
+  font-size: 13px;
+  color: #8b6a55;
+  width: 40px;
+  flex: 0 0 40px;
+}
+
+.bgm-range{
+  width: 100%;
+}
+
+.bgm-hint{
+  margin-top: 6px;
+  padding: 8px 8px 2px;
+  font-size: 12px;
+  color: #a58c7a;
+}
