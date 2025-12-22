@@ -77,126 +77,30 @@
 </div>
 
 <!-- =====================
-     🎵 音樂浮標 + 控制面板
+     🎵 全站共用音樂浮標
 ===================== -->
-<div id="bgm-float">
-  <button id="bgm-btn">🎵</button>
+<div class="bgm-fab">
+  <button class="bgm-btn" id="bgmBtn" type="button">
+    ♪ <span class="bgm-caret">▾</span>
+  </button>
 
-  <div id="bgm-panel">
-    <button id="playPause">⏸ 暫停</button>
-    <button id="muteBtn">🔇 靜音</button>
+  <div class="bgm-menu" id="bgmMenu">
+    <button class="bgm-item" id="bgmToggle">▶️ 播放</button>
+    <button class="bgm-item" id="bgmMute">🔇 靜音</button>
 
-    <div class="volume">
-      <span>音量</span>
-      <input type="range" id="volumeRange" min="0" max="1" step="0.01" value="0.4">
+    <div class="bgm-row">
+      <span class="bgm-label">音量</span>
+      <input id="bgmVolume" class="bgm-range"
+             type="range" min="0" max="1" step="0.01" value="0.5">
     </div>
 
-    <div class="hint">提示：第一次點擊／滾動後才會播放</div>
+    <div class="bgm-hint">
+      提示：第一次點擊／滾動後才會開始播放
+    </div>
   </div>
 </div>
 
-<!-- =====================
-     BGM Script
-===================== -->
-<script>
-(() => {
-  const audio = new Audio("bgm.mp3");
-  audio.loop = true;
-  audio.volume = 0.4;
-
-  let started = false;
-  const start = () => {
-    if (started) return;
-    started = true;
-    audio.play().catch(() => started = false);
-  };
-
-  ["click","touchstart","wheel","keydown"].forEach(e =>
-    document.addEventListener(e, start, { once:true })
-  );
-
-  const btn = document.getElementById("bgm-btn");
-  const panel = document.getElementById("bgm-panel");
-  const playPause = document.getElementById("playPause");
-  const muteBtn = document.getElementById("muteBtn");
-  const volume = document.getElementById("volumeRange");
-
-  btn.onclick = e => {
-    e.stopPropagation();
-    panel.classList.toggle("open");
-  };
-  document.onclick = () => panel.classList.remove("open");
-
-  playPause.onclick = () => {
-    if (audio.paused) {
-      audio.play();
-      playPause.textContent = "⏸ 暫停";
-    } else {
-      audio.pause();
-      playPause.textContent = "▶️ 播放";
-    }
-  };
-
-  muteBtn.onclick = () => {
-    audio.muted = !audio.muted;
-    muteBtn.textContent = audio.muted ? "🔈 取消靜音" : "🔇 靜音";
-  };
-
-  volume.oninput = () => audio.volume = volume.value;
-})();
-</script>
-
-<!-- =====================
-     音樂 UI 樣式（只影響自己）
-===================== -->
-<style>
-#bgm-float{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  z-index:9999;
-}
-#bgm-btn{
-  width:52px;height:52px;
-  border-radius:16px;
-  border:none;
-  font-size:22px;
-  background:#fff6ec;
-  box-shadow:0 10px 25px rgba(0,0,0,.15);
-  cursor:pointer;
-}
-#bgm-panel{
-  position:absolute;
-  right:0;
-  bottom:62px;
-  width:220px;
-  background:#fff;
-  border-radius:16px;
-  box-shadow:0 14px 30px rgba(0,0,0,.18);
-  padding:12px;
-  display:none;
-}
-#bgm-panel.open{display:block;}
-#bgm-panel button{
-  width:100%;
-  margin-bottom:8px;
-  padding:8px;
-  border-radius:10px;
-  border:none;
-  background:#f7efe8;
-  cursor:pointer;
-}
-.volume{
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-.hint{
-  font-size:12px;
-  color:#a58c7a;
-  margin-top:6px;
-}
-</style>
+<script src="bgm.js"></script>
 
 </body>
 </html>
