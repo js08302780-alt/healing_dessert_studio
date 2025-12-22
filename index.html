@@ -35,143 +35,168 @@
 
 <div class="container">
 
-  <header>
-    <h1>Healing Dessert Studio</h1>
-    <p class="tagline">用一份甜點，慢慢照顧你的心</p>
-  </header>
+<header>
+  <h1>Healing Dessert Studio</h1>
+  <p class="tagline">用一份甜點，慢慢照顧你的心</p>
+</header>
 
-  <main>
+<main>
 
-    <section class="block">
-      <h1>療癒系甜點品牌</h1>
-      <div class="content">
-        Healing Dessert Studio 是一間以「情緒療癒」為核心的甜點工作室，
-        希望透過溫柔的味道與色彩，陪伴每一段需要被安放的日常時光。
-      </div>
-    </section>
+<section class="block">
+  <h1>療癒系甜點品牌</h1>
+  <div class="content">
+    Healing Dessert Studio 是一間以「情緒療癒」為核心的甜點工作室，
+    希望透過溫柔的味道與色彩，陪伴每一段需要被安放的日常時光。
+  </div>
+</section>
 
-    <section class="cards">
-      <div class="card">
-        <h2>心情選單</h2>
-        <p>依照情緒狀態，選擇適合你的甜點。</p>
-        <a href="mood.html">前往查看 →</a>
-      </div>
+<section class="cards">
+  <div class="card">
+    <h2>心情選單</h2>
+    <p>依照情緒狀態，選擇適合你的甜點。</p>
+    <a href="mood.html">前往查看 →</a>
+  </div>
+  <div class="card">
+    <h2>熱門甜點</h2>
+    <p>最受歡迎的經典療癒甜點。</p>
+    <a href="cakes.html">前往查看 →</a>
+  </div>
+  <div class="card">
+    <h2>甜點工作坊</h2>
+    <p>透過手作，讓心慢慢靜下來。</p>
+    <a href="workshop.html">立即預約 →</a>
+  </div>
+</section>
 
-      <div class="card">
-        <h2>熱門甜點</h2>
-        <p>最受歡迎的經典療癒甜點。</p>
-        <a href="cakes.html">前往查看 →</a>
-      </div>
+</main>
 
-      <div class="card">
-        <h2>甜點工作坊</h2>
-        <p>透過手作，讓心慢慢靜下來。</p>
-        <a href="workshop.html">立即預約 →</a>
-      </div>
-    </section>
-
-  </main>
-
-  <footer>
-    <p>© Healing Dessert Studio 2025</p>
-  </footer>
+<footer>
+  <p>© Healing Dessert Studio 2025</p>
+</footer>
 
 </div>
 
+<!-- =====================
+     🎵 音樂浮標 + 控制面板
+===================== -->
+<div id="bgm-float">
+  <button id="bgm-btn">🎵</button>
 
-<!-- ✅ 右下角：音樂按鈕 + 下拉（長得像你截圖那種） -->
-<div class="bgm-fab" id="bgmFab">
-  <button class="bgm-btn" id="bgmBtn" aria-label="背景音樂控制" title="背景音樂">
-    ♪
-    <span class="bgm-caret">▾</span>
-  </button>
+  <div id="bgm-panel">
+    <button id="playPause">⏸ 暫停</button>
+    <button id="muteBtn">🔇 靜音</button>
 
-  <div class="bgm-menu" id="bgmMenu" aria-hidden="true">
-    <button class="bgm-item" id="bgmToggle">▶️ 播放</button>
-    <button class="bgm-item" id="bgmMute">🔇 靜音</button>
-
-    <div class="bgm-row">
-      <span class="bgm-label">音量</span>
-      <input id="bgmVolume" class="bgm-range" type="range" min="0" max="1" step="0.01" value="0.5">
+    <div class="volume">
+      <span>音量</span>
+      <input type="range" id="volumeRange" min="0" max="1" step="0.01" value="0.4">
     </div>
 
-    <div class="bgm-hint">提示：第一次點擊/觸控/滾動後才會開始播放</div>
+    <div class="hint">提示：第一次點擊／滾動後才會播放</div>
   </div>
 </div>
 
-
-<!-- ✅ 你的 bgm.js：放在 </body> 前（你現在位置就是對的） -->
-<script src="bgm.js"></script>
-
-<!-- ✅ 只負責控制「下拉 UI」，不改你音樂的播放邏輯 -->
+<!-- =====================
+     BGM Script
+===================== -->
 <script>
-  (function () {
-    const btn = document.getElementById("bgmBtn");
-    const menu = document.getElementById("bgmMenu");
-    const toggleBtn = document.getElementById("bgmToggle");
-    const muteBtn = document.getElementById("bgmMute");
-    const vol = document.getElementById("bgmVolume");
+(() => {
+  const audio = new Audio("bgm.mp3");
+  audio.loop = true;
+  audio.volume = 0.4;
 
-    // 你 bgm.js 若有建立 window.__bgmAudio 就能被這裡控制
-    //（下面提供一份你可以直接用的 bgm.js，會自動提供 __bgmAudio）
-    function getAudio() { return window.__bgmAudio || null; }
+  let started = false;
+  const start = () => {
+    if (started) return;
+    started = true;
+    audio.play().catch(() => started = false);
+  };
 
-    function setMenu(open) {
-      menu.classList.toggle("open", open);
-      menu.setAttribute("aria-hidden", String(!open));
+  ["click","touchstart","wheel","keydown"].forEach(e =>
+    document.addEventListener(e, start, { once:true })
+  );
+
+  const btn = document.getElementById("bgm-btn");
+  const panel = document.getElementById("bgm-panel");
+  const playPause = document.getElementById("playPause");
+  const muteBtn = document.getElementById("muteBtn");
+  const volume = document.getElementById("volumeRange");
+
+  btn.onclick = e => {
+    e.stopPropagation();
+    panel.classList.toggle("open");
+  };
+  document.onclick = () => panel.classList.remove("open");
+
+  playPause.onclick = () => {
+    if (audio.paused) {
+      audio.play();
+      playPause.textContent = "⏸ 暫停";
+    } else {
+      audio.pause();
+      playPause.textContent = "▶️ 播放";
     }
+  };
 
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      setMenu(!menu.classList.contains("open"));
-    });
+  muteBtn.onclick = () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? "🔈 取消靜音" : "🔇 靜音";
+  };
 
-    document.addEventListener("click", () => setMenu(false));
-
-    toggleBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const a = getAudio();
-      if (!a) return;
-
-      if (a.paused) {
-        a.play().catch(()=>{});
-      } else {
-        a.pause();
-      }
-      refreshUI();
-    });
-
-    muteBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const a = getAudio();
-      if (!a) return;
-
-      a.muted = !a.muted;
-      refreshUI();
-    });
-
-    vol.addEventListener("input", () => {
-      const a = getAudio();
-      if (!a) return;
-
-      a.volume = Number(vol.value);
-      if (a.volume === 0) a.muted = true;
-      refreshUI();
-    });
-
-    function refreshUI() {
-      const a = getAudio();
-      if (!a) return;
-
-      toggleBtn.textContent = a.paused ? "▶️ 播放" : "⏸ 暫停";
-      muteBtn.textContent = a.muted ? "🔈 取消靜音" : "🔇 靜音";
-      vol.value = String(a.volume);
-    }
-
-    // 每 0.5 秒刷新一次狀態（避免跨頁恢復後 UI 不同步）
-    setInterval(refreshUI, 500);
-  })();
+  volume.oninput = () => audio.volume = volume.value;
+})();
 </script>
+
+<!-- =====================
+     音樂 UI 樣式（只影響自己）
+===================== -->
+<style>
+#bgm-float{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:9999;
+}
+#bgm-btn{
+  width:52px;height:52px;
+  border-radius:16px;
+  border:none;
+  font-size:22px;
+  background:#fff6ec;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  cursor:pointer;
+}
+#bgm-panel{
+  position:absolute;
+  right:0;
+  bottom:62px;
+  width:220px;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 14px 30px rgba(0,0,0,.18);
+  padding:12px;
+  display:none;
+}
+#bgm-panel.open{display:block;}
+#bgm-panel button{
+  width:100%;
+  margin-bottom:8px;
+  padding:8px;
+  border-radius:10px;
+  border:none;
+  background:#f7efe8;
+  cursor:pointer;
+}
+.volume{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.hint{
+  font-size:12px;
+  color:#a58c7a;
+  margin-top:6px;
+}
+</style>
 
 </body>
 </html>
