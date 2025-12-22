@@ -205,31 +205,33 @@ footer {
 }
 
 /* =========================================================
-   ✅ BGM 浮動按鈕（只影響 .bgm-*，不會動到你的版面）
-   目標：長得像你截圖那種「小圓角方塊 + 音符 + 下拉」
+   ✅ BGM 浮標（只新增這段，不會影響你的版面）
 ========================================================= */
 .bgm-fab{
   position: fixed;
   right: 22px;
   bottom: 22px;
-  z-index: 9999;          /* 讓它永遠在最上層 */
-  pointer-events: auto;
+  z-index: 99999;         /* ✅ 一定蓋在最上面 */
+  pointer-events: auto;   /* ✅ 一定能按 */
+  font-family: inherit;
 }
 
-/* 外層按鈕：小圓角方塊 */
 .bgm-btn{
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 14px;
+  min-width: 58px;
+  height: 52px;
+  padding: 0 16px;
   border: 0;
-  cursor: pointer;
-  border-radius: 16px;
+  border-radius: 18px;
   background: rgba(255, 246, 236, 0.95);
-  box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
   color: #6b4f3f;
+  cursor: pointer;
   font-size: 20px;
   line-height: 1;
+  user-select: none;
 }
 
 .bgm-btn:active{
@@ -238,61 +240,55 @@ footer {
 
 .bgm-caret{
   font-size: 14px;
-  opacity: .7;
+  opacity: 0.75;
+  transform: translateY(1px);
 }
 
-/* 下拉選單 */
 .bgm-menu{
   position: absolute;
   right: 0;
-  bottom: 56px;
-  width: 220px;
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.15);
-  padding: 10px;
-  border: 1px solid #f0e3d8;
-
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
-  transition: .18s ease;
+  bottom: 64px;
+  width: 280px;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+  border: 1px solid rgba(234, 223, 212, 0.8);
+  display: none; /* 預設收起 */
 }
 
 .bgm-menu.open{
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+  display: block;
 }
 
 .bgm-item{
   width: 100%;
-  padding: 10px 10px;
   border: 0;
-  border-radius: 10px;
-  background: transparent;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin: 6px 0;
+  background: #f7f0ea;
+  color: #6b4f3f;
+  font-size: 15px;
   cursor: pointer;
-  text-align: left;
-  font-size: 14px;
-  color: #4a3f35;
 }
 
 .bgm-item:hover{
-  background: #fff3e6;
+  background: #f1e6dd;
 }
 
 .bgm-row{
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 8px 6px;
+  margin-top: 10px;
+  padding: 8px 6px 2px;
 }
 
 .bgm-label{
-  font-size: 13px;
+  font-size: 14px;
   color: #8b6a55;
-  width: 40px;
-  flex: 0 0 40px;
+  width: 44px;
 }
 
 .bgm-range{
@@ -300,8 +296,8 @@ footer {
 }
 
 .bgm-hint{
-  margin-top: 6px;
-  padding: 8px 8px 2px;
+  margin-top: 10px;
   font-size: 12px;
   color: #a58c7a;
+  line-height: 1.4;
 }
