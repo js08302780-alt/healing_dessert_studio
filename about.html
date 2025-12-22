@@ -37,21 +37,17 @@
   <!-- ===== 主內容區 ===== -->
   <div class="container">
 
-    <!-- Header -->
     <header>
       <h1>公司起源</h1>
       <p class="tagline">我們為什麼創立 Healing Dessert Studio</p>
     </header>
 
-    <!-- Main -->
     <main>
 
-      <!-- 主視覺 -->
       <div class="page-image">
         <img src="images/about.jpg" alt="Healing Dessert Studio 品牌故事">
       </div>
 
-      <!-- 區塊一：為什麼存在 -->
       <section class="block">
         <h1>我們為什麼存在</h1>
         <div class="content">
@@ -64,7 +60,6 @@
         </div>
       </section>
 
-      <!-- 區塊二：品牌起源 -->
       <section class="block">
         <h1>品牌起源</h1>
         <div class="content">
@@ -77,7 +72,6 @@
         </div>
       </section>
 
-      <!-- 區塊三：我們怎麼做 -->
       <section class="block">
         <h1>我們如何實踐療癒</h1>
         <div class="content">
@@ -90,7 +84,6 @@
         </div>
       </section>
 
-      <!-- 區塊四：品牌價值 -->
       <section class="block">
         <h1>我們相信的價值</h1>
         <div class="content">
@@ -102,7 +95,6 @@
         </div>
       </section>
 
-      <!-- 區塊五：導向 -->
       <section class="block">
         <h1>從這裡開始探索</h1>
         <div class="content">
@@ -114,15 +106,35 @@
 
     </main>
 
-    <!-- Footer -->
     <footer>
       <p>© Healing Dessert Studio 2025 ｜ 用甜點照顧情緒的每一天</p>
     </footer>
 
   </div>
-<!-- 音樂浮標 -->
-<div class="bgm-fab">…</div>
-<script src="bgm.js"></script>
+
+  <!-- ✅ 真正的音樂浮標（不是 …） -->
+  <div class="bgm-fab" id="bgmFab">
+    <button class="bgm-btn" id="bgmBtn" type="button">
+      ♪ <span class="bgm-caret">▾</span>
+    </button>
+
+    <div class="bgm-menu" id="bgmMenu">
+      <button class="bgm-item" id="bgmToggle">▶️ 播放</button>
+      <button class="bgm-item" id="bgmMute">🔇 靜音</button>
+
+      <div class="bgm-row">
+        <span class="bgm-label">音量</span>
+        <input id="bgmVolume" class="bgm-range"
+               type="range" min="0" max="1" step="0.01" value="0.5">
+      </div>
+
+      <div class="bgm-hint">
+        提示：第一次點擊／滾動後才會開始播放
+      </div>
+    </div>
+  </div>
+
+  <script src="bgm.js"></script>
 
 </body>
 </html>
