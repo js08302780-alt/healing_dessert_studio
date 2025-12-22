@@ -1,9 +1,7 @@
 /* =====================
    全站基礎設定
 ===================== */
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -13,14 +11,8 @@ body {
   line-height: 1.8;
 }
 
-a {
-  text-decoration: none;
-  color: #6b4f3f;
-}
-
-a:hover {
-  color: #c0896f;
-}
+a { text-decoration: none; color: #6b4f3f; }
+a:hover { color: #c0896f; }
 
 /* =====================
    側邊選單 Aside
@@ -35,6 +27,7 @@ aside {
   padding: 20px;
   border-right: 1px solid #eadfd4;
   overflow-y: auto;
+  z-index: 10; /* 低一點，避免蓋到右上角按鈕 */
 }
 
 aside h2 {
@@ -56,9 +49,7 @@ aside nav a {
   border-radius: 8px;
 }
 
-aside nav a:hover {
-  background-color: #ffe8d8;
-}
+aside nav a:hover { background-color: #ffe8d8; }
 
 /* =====================
    主容器
@@ -88,203 +79,3 @@ header h1 {
 header .tagline {
   margin-top: 8px;
   font-size: 1rem;
-  color: #a58c7a;
-}
-
-/* =====================
-   Main
-===================== */
-main {
-  flex: 1;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 40px 20px;
-}
-
-/* =====================
-   白色內容卡片
-===================== */
-.block {
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 32px;
-  margin-bottom: 40px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-}
-
-.block h1 {
-  margin-top: 0;
-  font-size: 1.6rem;
-  color: #8b7355;
-}
-
-.content {
-  font-size: 1.05rem;
-  color: #6b5a4a;
-}
-
-/* =====================
-   Cards 區塊
-===================== */
-.cards {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-}
-
-.card {
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 20px;
-  flex: 1 1 calc(33.333% - 16px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.08);
-}
-
-.card h2 {
-  margin-top: 0;
-  color: #f4a07a;
-}
-
-.card p {
-  font-size: 0.95rem;
-  color: #6b5a4a;
-}
-
-/* =====================
-   Footer
-===================== */
-footer {
-  background-color: #fff3e6;
-  text-align: center;
-  padding: 24px 16px;
-  font-size: 0.9rem;
-  color: #8b6a55;
-}
-
-/* =====================
-   🎵 BGM 音符按鈕（右下角）
-===================== */
-.bgm-fab {
-  position: fixed;
-  left: 260px;           /* 避開左側選單 */
-  bottom: 20px;
-  margin-left: 20px;
-  z-index: 9999;
-}
-
-@media (max-width: 600px) {
-  .bgm-fab {
-    left: 16px;
-    margin-left: 0;
-  }
-}
-
-.bgm-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  border: 1px solid #eadfd4;
-  background-color: #fff6ec;
-  color: #8b6a55;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.bgm-caret {
-  font-size: 12px;
-  opacity: 0.7;
-}
-
-.bgm-menu {
-  margin-top: 10px;
-  width: 220px;
-  background-color: #ffffff;
-  border: 1px solid #eadfd4;
-  border-radius: 16px;
-  padding: 10px;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.1);
-  display: none;
-}
-
-.bgm-menu.open {
-  display: block;
-}
-
-.bgm-item {
-  width: 100%;
-  padding: 10px 12px;
-  background: transparent;
-  border: none;
-  text-align: left;
-  font-size: 14px;
-  color: #4a3f35;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.bgm-item:hover {
-  background-color: #fff3e6;
-}
-
-.bgm-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-}
-
-.bgm-label {
-  font-size: 13px;
-  color: #6b5a4a;
-  width: 42px;
-}
-
-.bgm-range {
-  width: 100%;
-}
-
-.bgm-hint {
-  font-size: 12px;
-  color: #a58c7a;
-  padding: 6px 10px 0;
-  line-height: 1.4;
-}
-
-/* =====================
-   RWD
-===================== */
-@media (max-width: 900px) {
-  .card {
-    flex: 1 1 calc(50% - 12px);
-  }
-}
-
-@media (max-width: 600px) {
-  .container {
-    margin-left: 0;
-  }
-
-  aside {
-    position: relative;
-    width: 100%;
-    height: auto;
-  }
-
-  header h1 {
-    font-size: 1.8rem;
-  }
-
-  .card {
-    flex: 1 1 100%;
-  }
-}
