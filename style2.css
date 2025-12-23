@@ -1,5 +1,3 @@
-/* style2.css */
-
 /* =====================
    全站基礎設定
 ===================== */
@@ -52,11 +50,6 @@ aside nav a {
 
 aside nav a:hover { background-color: #ffe8d8; }
 
-aside nav a.active{
-  background-color: #ffe8d8;
-  font-weight: 700;
-}
-
 /* =====================
    主容器
 ===================== */
@@ -68,70 +61,24 @@ aside nav a.active{
 }
 
 /* =====================
-   Banner Header（符合 PDF：banner 圖 + 右上語系）
+   Header
 ===================== */
-.banner-header{
-  position: relative;
-  min-height: 220px;
-  background-image:
-    linear-gradient(rgba(255,243,230,0.85), rgba(255,250,242,0.95)),
-    url("images/banner.jpg");
-  background-size: cover;
-  background-position: center;
+header {
+  background: linear-gradient(#fff3e6, #fffaf2);
+  padding: 40px 20px 30px;
+  text-align: center;
 }
 
-.banner-overlay{
-  padding: 34px 20px 28px;
-}
-
-.banner-top{
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  gap: 18px;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.banner-title h1{
+header h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: #8b6a55;
-  letter-spacing: 0.5px;
 }
 
-.banner-sub{
-  margin: 10px 0 0;
-  color: #8b7355;
-  font-size: 1.05rem;
-}
-
-.banner-actions{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 4px;
-}
-
-.lang-wrap{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(234, 223, 212, 0.9);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
-}
-
-.lang-label{ font-size: 16px; }
-.lang-select{
-  border: 0;
-  outline: none;
-  background: transparent;
-  color: #6b4f3f;
-  font-size: 14px;
-  cursor: pointer;
+header .tagline {
+  margin-top: 8px;
+  font-size: 1rem;
+  color: #a58c7a;
 }
 
 /* =====================
@@ -141,305 +88,109 @@ main {
   flex: 1;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 36px 20px 40px;
+  padding: 40px 20px;
 }
 
 /* =====================
-   白色內容卡片（block）
+   頁首大圖（固定 16:9）
+===================== */
+.page-image {
+  width: 100%;
+  margin-bottom: 40px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.page-image img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* =====================
+   白色內容卡片
 ===================== */
 .block {
   background-color: #ffffff;
-  border-radius: 26px;
-  padding: 34px;
-  margin-bottom: 34px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 40px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 
-.section-h2{
-  margin: 0;
-  font-size: 2.1rem;
+.block h1 {
+  margin-top: 0;
+  font-size: 1.6rem;
   color: #8b7355;
-  letter-spacing: 0.4px;
 }
 
-.section-desc{
-  margin: 12px 0 18px;
+.content {
   font-size: 1.05rem;
   color: #6b5a4a;
 }
 
-.step-note{
-  margin: 16px 0 0;
-  color: #8b6a55;
-  font-weight: 700;
-}
-
 /* =====================
-   心情按鈕列（可按、可高亮）
+   Cards 區塊
 ===================== */
-.mood-bar{
+.cards {
   display: flex;
+  gap: 24px;
   flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  padding: 6px 2px 2px;
+  margin-bottom: 40px;
 }
 
-.mood-btn{
-  appearance: none;
-  border: 2px solid rgba(234, 223, 212, 0.95);
-  background: #fff;
-  color: #6b4f3f;
-  border-radius: 999px;
-  padding: 10px 16px;
-  font-size: 15px;
-  line-height: 1;
-  cursor: pointer;
-  user-select: none;
-  transition: transform 0.12s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.04);
-}
-
-.mood-btn:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 12px 26px rgba(0,0,0,0.07);
-}
-
-.mood-btn:active{
-  transform: translateY(0px) scale(0.98);
-}
-
-.mood-btn.is-active{
-  background: #fff3e6;
-  border-color: rgba(192, 137, 111, 0.55);
-  box-shadow: 0 14px 34px rgba(0,0,0,0.10);
-}
-
-.mood-btn.is-pulse{
-  animation: pulse 380ms ease;
-}
-
-@keyframes pulse{
-  0%{ transform: translateY(-1px) scale(1.02); }
-  100%{ transform: translateY(0px) scale(1); }
-}
-
-/* =====================
-   Interact 區
-===================== */
-.interact-box{
+.card {
+  background-color: #ffffff;
   border-radius: 20px;
-  background: #fffaf2;
-  border: 1px solid rgba(234, 223, 212, 0.9);
-  padding: 18px 18px 14px;
-}
-
-.interact-row{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-
-.badge{
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid rgba(234, 223, 212, 0.9);
-  color: #8b6a55;
-  font-weight: 700;
-}
-
-.picked{
-  font-size: 18px;
-  color: #6b4f3f;
-}
-
-.picked-list{
-  margin: 10px 0 0;
-  padding-left: 18px;
-  color: #6b4f3f;
-}
-
-.picked-list .muted{
-  color: #a58c7a;
-}
-
-.click-hint{
-  margin-top: 12px;
-  color: #8b6a55;
-  font-weight: 800;
-}
-
-/* =====================
-   Reveal：推薦卡（符合 PDF 的 section1：H2 + 圖 + 虛線 + 價格 + 按鈕）
-===================== */
-.reco-grid{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 22px;
-  margin-top: 6px;
-}
-
-.section1{
-  background: #fff;
-  border-radius: 22px;
-  padding: 18px;
+  padding: 20px;
   flex: 1 1 calc(33.333% - 16px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
-  border: 1px solid rgba(234, 223, 212, 0.65);
-  min-width: 260px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.section1 h2{
-  margin: 2px 0 12px;
-  font-size: 1.25rem;
-  color: #f4a07a; /* 你的卡片粉橘 */
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.08);
 }
 
-.section1 .img-wrap{
-  width: 100%;
-  border-radius: 18px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #fff3e6, #fffaf2);
-  border: 1px solid rgba(234, 223, 212, 0.65);
+.card h2, .card h3 {
+  margin-top: 0;
+  color: #f4a07a;
 }
 
-.section1 img{
+.card p {
+  font-size: 0.95rem;
+  color: #6b5a4a;
+}
+
+/* 卡片圖片：固定 4:3 */
+.card-img {
   width: 100%;
   display: block;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-}
-
-.section1 .dash{
-  margin: 14px 0 12px;
-  border-top: 2px dashed rgba(192, 137, 111, 0.35);
-}
-
-.section1 .price{
-  font-size: 1.25rem;
-  font-weight: 900;
-  color: #87b6eb; /* 天藍 */
-  margin: 0 0 12px;
-}
-
-.section1 .mini{
-  margin: 0 0 12px;
-  color: #6b5a4a;
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.section1 .btn-row{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.action-btn{
-  border: 0;
-  border-radius: 14px;
-  padding: 10px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  background: #f7f0ea;
-  color: #6b4f3f;
-  box-shadow: 0 10px 22px rgba(0,0,0,0.06);
-  transition: transform 0.12s ease, box-shadow 0.18s ease;
-}
-
-.action-btn:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 14px 28px rgba(0,0,0,0.09);
-}
-
-.action-btn.primary{
-  background: #ffe8d8;
-  font-weight: 800;
-}
-
-.reco-empty{
-  margin-top: 14px;
-  padding: 14px 16px;
   border-radius: 16px;
-  background: #fffaf2;
-  border: 1px solid rgba(234, 223, 212, 0.9);
-  color: #a58c7a;
+  margin-bottom: 14px;
 }
 
 /* =====================
-   Footer（符合 PDF：上下兩層）
+   Footer
 ===================== */
-.footer-2{
+footer {
   background-color: #fff3e6;
-  color: #8b6a55;
-}
-
-.footer-top{
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 22px 20px 10px;
-  display: flex;
-  gap: 18px;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.footer-col{
-  min-width: 240px;
-  flex: 1 1 300px;
-}
-
-.footer-col h3{
-  margin: 0 0 10px;
-  font-size: 1rem;
-  color: #8b6a55;
-}
-
-.social-row{
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.pay-row{
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.pay-pill{
-  font-size: 12px;
-  padding: 7px 10px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.65);
-  border: 1px solid rgba(234,223,212,0.9);
-}
-
-.footer-bottom{
-  border-top: 1px solid rgba(234, 223, 212, 0.9);
   text-align: center;
-  padding: 14px 14px 18px;
-}
-
-.footer-links{
-  margin-top: 8px;
-  font-size: 0.92rem;
-}
-
-.footer-links .sep{
-  margin: 0 8px;
-  opacity: 0.8;
+  padding: 24px 16px;
+  font-size: 0.9rem;
+  color: #8b6a55;
 }
 
 /* =====================
    RWD
 ===================== */
 @media (max-width: 900px) {
-  .banner-top{ flex-direction: column; align-items: flex-start; }
-  .section1{ flex: 1 1 calc(50% - 12px); }
+  .card { flex: 1 1 calc(50% - 12px); }
 }
 
 @media (max-width: 600px) {
@@ -449,13 +200,12 @@ main {
     height: auto;
   }
   .container { margin-left: 0; }
-  .banner-header{ min-height: 200px; }
-  .banner-title h1{ font-size: 1.55rem; }
-  .section1{ flex: 1 1 100%; }
+  header h1 { font-size: 1.8rem; }
+  .card { flex: 1 1 100%; }
 }
 
 /* =========================================================
-   ✅ BGM 浮標（保留你原本的）
+   ✅ BGM 浮標（只新增這段，不會影響你的版面）
 ========================================================= */
 .bgm-fab{
   position: fixed;
@@ -542,4 +292,296 @@ main {
   font-size: 12px;
   color: #a58c7a;
   line-height: 1.4;
+}
+
+/* =========================================================
+   ✅ mood.html：Choose / Interact / Reveal（三欄互動）
+   （只新增，不影響其他頁）
+========================================================= */
+.mood-lead{
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #fff6ec;
+  border: 1px solid #eadfd4;
+  color: #6b5a4a;
+}
+
+.mood-flow{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 22px;
+  margin-top: 18px;
+}
+
+.mood-panel{
+  background: #fbf6f1;
+  border: 1px solid rgba(234, 223, 212, 0.9);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.mood-panel-top{
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.mood-chip{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #8b6a55;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(234, 223, 212, 0.9);
+}
+
+.mood-step-title{
+  margin: 6px 0 2px;
+  font-size: 1.25rem;
+  color: #3f3a35;
+  letter-spacing: 0.2px;
+}
+
+.mood-step-sub{
+  margin: 0 0 12px;
+  font-size: 0.92rem;
+  color: #8b6a55;
+}
+
+.mood-buttons{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 2px 2px;
+}
+
+.mood-pill{
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #eadfd4;
+  color: #6b5a4a;
+  font-size: 14px;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  user-select: none;
+}
+
+.mood-pill:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.08);
+  background: #e6d4c5;
+}
+
+.mood-pill:active{
+  transform: translateY(0);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.10);
+}
+
+.mood-pill .mood-emoji{
+  font-size: 16px;
+  transform: translateY(1px);
+}
+
+.mood-pill.active{
+  background: #8b6a55;
+  color: #fff;
+  box-shadow: 0 12px 22px rgba(139,106,85,0.25);
+}
+
+.mood-pill.ghost{
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+.mood-note{
+  margin: 12px 0 0;
+  font-size: 0.86rem;
+  color: #8b6a55;
+}
+
+.mood-preview{
+  position: relative;
+  min-height: 160px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.6);
+  border: 1px dashed rgba(234, 223, 212, 0.95);
+  padding: 14px;
+}
+
+.mood-preview-pills{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mood-js-badge{
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  font-weight: 700;
+  font-size: 12px;
+  color: #8b6a55;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(234, 223, 212, 0.9);
+  padding: 6px 10px;
+  border-radius: 12px;
+}
+
+.mood-reveal{
+  min-height: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.6);
+  border: 1px dashed rgba(234, 223, 212, 0.95);
+  padding: 14px;
+}
+
+.mood-empty{
+  text-align: center;
+  color: #8b6a55;
+}
+
+.mood-empty-icon{
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.mood-empty-text{
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.dessert-card{
+  width: 100%;
+  max-width: 360px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(234, 223, 212, 0.95);
+  box-shadow: 0 16px 38px rgba(0,0,0,0.10);
+  transform: translateY(6px);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.dessert-card.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dessert-photo{
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-size: cover;
+  background-position: center;
+}
+
+.dessert-body{
+  padding: 14px 14px 12px;
+}
+
+.dessert-top{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dessert-name{
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #8b6a55;
+}
+
+.dessert-tag{
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: #fff6ec;
+  border: 1px solid rgba(234, 223, 212, 0.95);
+  color: #8b6a55;
+  white-space: nowrap;
+}
+
+.dessert-desc{
+  margin-top: 8px;
+  font-size: 0.92rem;
+  color: #6b5a4a;
+  line-height: 1.55;
+}
+
+.dessert-bottom{
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.dessert-price{
+  font-weight: 900;
+  color: #6aa7b4;
+  font-size: 1.05rem;
+}
+
+.dessert-link{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #f7f0ea;
+  color: #6b4f3f;
+  font-size: 14px;
+  border: 1px solid rgba(234, 223, 212, 0.95);
+}
+
+.dessert-link:hover{
+  background: #f1e6dd;
+}
+
+.mood-bottom{
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.mood-cta{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #8b6a55;
+  color: #fff;
+  font-weight: 800;
+}
+
+.mood-cta:hover{ opacity: 0.92; }
+
+.mood-hint{
+  font-size: 0.9rem;
+  color: #a58c7a;
+}
+
+/* mood RWD */
+@media (max-width: 980px){
+  .mood-flow{ grid-template-columns: 1fr; }
+  .dessert-card{ max-width: 520px; }
 }
