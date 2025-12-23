@@ -1,9 +1,7 @@
 /* =====================
    全站基礎設定
 ===================== */
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -13,14 +11,8 @@ body {
   line-height: 1.8;
 }
 
-a {
-  text-decoration: none;
-  color: #6b4f3f;
-}
-
-a:hover {
-  color: #c0896f;
-}
+a { text-decoration: none; color: #6b4f3f; }
+a:hover { color: #c0896f; }
 
 /* =====================
    側邊選單 Aside
@@ -56,9 +48,7 @@ aside nav a {
   border-radius: 8px;
 }
 
-aside nav a:hover {
-  background-color: #ffe8d8;
-}
+aside nav a:hover { background-color: #ffe8d8; }
 
 /* =====================
    主容器
@@ -102,14 +92,33 @@ main {
 }
 
 /* =====================
-   白色內容卡片（上方大說明）
+   頁首大圖（✅改回橫的 4:3）
+===================== */
+.page-image {
+  width: 100%;
+  margin-bottom: 40px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+}
+
+.page-image img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 4 / 3;   /* ✅橫的 4:3 */
+  object-fit: cover;
+  object-position: center;
+}
+
+/* =====================
+   白色內容卡片
 ===================== */
 .block {
   background-color: #ffffff;
-  border-radius: 28px;
-  padding: 34px;
+  border-radius: 20px;
+  padding: 32px;
   margin-bottom: 40px;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 
 .block h1 {
@@ -123,84 +132,57 @@ main {
   color: #6b5a4a;
 }
 
-/* =================================================
-   🔹 下方「文字小卡」區（回到你原本的樣子）
-================================================= */
+/* =====================
+   Cards 區塊（✅小卡回到「原本大小」不再被拉超大）
+===================== */
 .cards {
   display: flex;
-  gap: 32px;
+  gap: 24px;
   flex-wrap: wrap;
-  justify-content: flex-start;
   margin-bottom: 40px;
+
+  /* ✅讓 3 張卡片像你原本那樣「置中排」而不是被撐滿 */
+  justify-content: center;
+  align-items: stretch;
 }
 
-/* 純文字說明卡（沒有圖片的 card） */
-.card:not(:has(img)) {
-  width: 100%;
-  max-width: 360px;
-  padding: 28px 26px;
-  border-radius: 28px;
-  background-color: #ffffff;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.06);
-}
-
-.card:not(:has(img)) h2,
-.card:not(:has(img)) h3 {
-  margin-top: 0;
-  margin-bottom: 12px;
-  font-size: 1.25rem;
-  color: #f4a07a;
-}
-
-.card:not(:has(img)) p {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.7;
-  color: #6b5a4a;
-}
-
-/* =================================================
-   🍰 產品卡片（有圖片的）
-================================================= */
-.card:has(img) {
-  width: 280px;
+.card {
   background-color: #ffffff;
   border-radius: 20px;
-  padding: 16px;
-  box-shadow: 0 12px 26px rgba(0,0,0,0.06);
+  padding: 20px;
+
+  /* ✅關鍵：不要再被 flex 撐到很寬很大 */
+  flex: 0 1 320px;     /* 每張卡片理想寬度 */
+  max-width: 320px;    /* ✅上限固定，回到你原本那種大小 */
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card:has(img):hover {
+.card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 18px 36px rgba(0,0,0,0.08);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.08);
 }
 
-.card:has(img) h2,
-.card:has(img) h3 {
-  font-size: 1.05rem;
-  margin: 10px 0 6px;
+.card h2, .card h3 {
+  margin-top: 0;
   color: #f4a07a;
 }
 
-.card:has(img) p {
-  font-size: 0.92rem;
+.card p {
+  font-size: 0.95rem;
   color: #6b5a4a;
 }
 
-/* ===============================
-   🔥 圖片「強制 3:4 直式」
-=============================== */
-.card img,
+/* ✅小卡圖片：固定「橫的 4:3」 */
 .card-img {
   width: 100%;
-  aspect-ratio: 3 / 4 !important;
-  height: auto !important;
-  max-height: none !important;
-  object-fit: cover !important;
-  border-radius: 14px;
   display: block;
-  margin-bottom: 10px;
+  aspect-ratio: 4 / 3;     /* ✅橫的 */
+  object-fit: cover;
+  object-position: center; /* ✅永遠置中裁切 */
+  border-radius: 16px;
+  margin-bottom: 14px;
 }
 
 /* =====================
@@ -218,8 +200,9 @@ footer {
    RWD
 ===================== */
 @media (max-width: 900px) {
-  .card:has(img) {
-    width: calc(50% - 16px);
+  .card {
+    flex: 0 1 320px;
+    max-width: 320px;
   }
 }
 
@@ -229,33 +212,27 @@ footer {
     width: 100%;
     height: auto;
   }
+  .container { margin-left: 0; }
+  header h1 { font-size: 1.8rem; }
 
-  .container {
-    margin-left: 0;
-  }
-
-  header h1 {
-    font-size: 1.8rem;
-  }
-
-  .card:has(img),
-  .card:not(:has(img)) {
-    width: 100%;
-  }
+  /* 手機就一張一排，維持漂亮間距 */
+  .cards { justify-content: center; }
+  .card  { max-width: 520px; width: 100%; }
 }
 
-/* =================================================
-   🎵 BGM 浮標（保留）
-================================================= */
-.bgm-fab {
+/* =========================================================
+   ✅ BGM 浮標（不影響版面）
+========================================================= */
+.bgm-fab{
   position: fixed;
   right: 22px;
   bottom: 22px;
   z-index: 99999;
   pointer-events: auto;
+  font-family: inherit;
 }
 
-.bgm-btn {
+.bgm-btn{
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -269,8 +246,74 @@ footer {
   color: #6b4f3f;
   cursor: pointer;
   font-size: 20px;
+  line-height: 1;
+  user-select: none;
 }
 
-.bgm-menu {
+.bgm-btn:active{
+  transform: translateY(1px);
+}
+
+.bgm-caret{
+  font-size: 14px;
+  opacity: 0.75;
+  transform: translateY(1px);
+}
+
+.bgm-menu{
+  position: absolute;
+  right: 0;
+  bottom: 64px;
+  width: 280px;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+  border: 1px solid rgba(234, 223, 212, 0.8);
   display: none;
+}
+
+.bgm-menu.open{
+  display: block;
+}
+
+.bgm-item{
+  width: 100%;
+  border: 0;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin: 6px 0;
+  background: #f7f0ea;
+  color: #6b4f3f;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.bgm-item:hover{
+  background: #f1e6dd;
+}
+
+.bgm-row{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 8px 6px 2px;
+}
+
+.bgm-label{
+  font-size: 14px;
+  color: #8b6a55;
+  width: 44px;
+}
+
+.bgm-range{
+  width: 100%;
+}
+
+.bgm-hint{
+  margin-top: 10px;
+  font-size: 12px;
+  color: #a58c7a;
+  line-height: 1.4;
 }
