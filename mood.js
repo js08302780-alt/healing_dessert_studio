@@ -1,209 +1,192 @@
-// mood.js
 (() => {
-  const moodBar = document.getElementById("moodBar");
-  const pickedText = document.getElementById("pickedText");
-  const pickedList = document.getElementById("pickedList");
-  const recoGrid = document.getElementById("recoGrid");
-  const recoEmpty = document.getElementById("recoEmpty");
+  const moods = [
+    { key: "stress", label: "壓力", emoji: "😮‍💨" },
+    { key: "overwhelm", label: "壓力大", emoji: "🫠" },
+    { key: "sad", label: "感傷", emoji: "🥺" },
+    { key: "angry", label: "煩躁", emoji: "😤" },
+    { key: "calm", label: "安靜", emoji: "🌿" },
+    { key: "happy", label: "開心", emoji: "✨" }
+  ];
 
-  // 用 SVG 當圖片（不用另外放檔案也會顯示）
-  const svgImage = (title, accent = "#f4a07a") => {
-    const safeTitle = (title || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  // 用 SVG 當「照片」，不用另外放圖檔
+  const svgPhoto = (theme = "lavender") => {
+    const themes = {
+      lavender: { bg1: "#f6efe9", bg2: "#efe2d8", acc: "#cbb1a2", dot: "#a58c7a" },
+      caramel:  { bg1: "#fff0e2", bg2: "#f3d8c5", acc: "#e2b38e", dot: "#b07b5a" },
+      mint:     { bg1: "#eff7f1", bg2: "#d7efe0", acc: "#9fd3b2", dot: "#5b8c74" },
+      cocoa:    { bg1: "#f4efe9", bg2: "#e7d6c9", acc: "#c89f7c", dot: "#7c5a42" },
+      berry:    { bg1: "#fff0f3", bg2: "#f3c9d1", acc: "#d98aa0", dot: "#9a4f5f" },
+      citrus:   { bg1: "#fff7e8", bg2: "#ffe2b8", acc: "#f2b36a", dot: "#a86a2a" }
+    };
+
+    const t = themes[theme] || themes.lavender;
+
     const svg = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
         <defs>
-          <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-            <stop offset="0" stop-color="#fff3e6"/>
-            <stop offset="1" stop-color="#fffaf2"/>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="${t.bg1}"/>
+            <stop offset="1" stop-color="${t.bg2}"/>
           </linearGradient>
+          <filter id="s" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="rgba(0,0,0,0.10)"/>
+          </filter>
         </defs>
-        <rect width="100%" height="100%" fill="url(#g)"/>
-        <circle cx="650" cy="130" r="90" fill="${accent}" opacity="0.22"/>
-        <circle cx="120" cy="470" r="120" fill="${accent}" opacity="0.18"/>
-        <rect x="90" y="150" width="620" height="300" rx="26" fill="#ffffff" opacity="0.9"/>
-        <text x="400" y="290" font-size="42" text-anchor="middle" fill="#8b6a55" font-family="Microsoft JhengHei, Noto Sans TC, sans-serif">
-          Healing Dessert Studio
-        </text>
-        <text x="400" y="350" font-size="36" text-anchor="middle" fill="#6b4f3f" font-family="Microsoft JhengHei, Noto Sans TC, sans-serif">
-          ${safeTitle}
-        </text>
+
+        <rect width="1200" height="675" fill="url(#g)"/>
+        <!-- 桌面 / 盤子 -->
+        <ellipse cx="740" cy="410" rx="330" ry="110" fill="rgba(255,255,255,0.7)"/>
+        <ellipse cx="740" cy="410" rx="260" ry="85" fill="rgba(255,255,255,0.9)"/>
+        <!-- 甜點(簡化) -->
+        <g filter="url(#s)">
+          <circle cx="665" cy="385" r="56" fill="#fff" stroke="${t.acc}" stroke-width="8"/>
+          <circle cx="740" cy="350" r="66" fill="#fff" stroke="${t.acc}" stroke-width="8"/>
+          <circle cx="820" cy="392" r="54" fill="#fff" stroke="${t.acc}" stroke-width="8"/>
+          <!-- 巧克力豆 -->
+          ${Array.from({length: 24}).map((_,i)=>{
+            const x = 610 + (i*23)%280;
+            const y = 320 + Math.floor(i/12)*90 + (i%3)*10;
+            return `<circle cx="${x}" cy="${y}" r="6" fill="${t.dot}" opacity="0.55"/>`;
+          }).join("")}
+        </g>
+
+        <!-- 薰衣草/裝飾 -->
+        <g opacity="0.45">
+          <rect x="240" y="220" width="18" height="220" rx="9" fill="${t.dot}"/>
+          <circle cx="249" cy="210" r="26" fill="${t.dot}"/>
+          <circle cx="280" cy="240" r="18" fill="${t.dot}"/>
+          <circle cx="220" cy="260" r="14" fill="${t.dot}"/>
+        </g>
       </svg>
     `.trim();
-    return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
   };
 
-  // 依心情 → 推薦清單（至少包含：壓力大 → 薰衣草餅乾，符合你的頁面說明）
-  const RECO = {
+  const dessertByMood = {
     stress: {
-      label: "😮‍💨 壓力",
-      items: [
-        {
-          name: "檸檬蜂蜜奶油塔",
-          price: "NT$ 240",
-          desc: "酸甜清爽，讓腦袋先降噪一下。",
-          img: svgImage("檸檬蜂蜜奶油塔", "#c0896f"),
-        },
-        {
-          name: "伯爵奶茶磅蛋糕",
-          price: "NT$ 260",
-          desc: "溫柔茶香，慢慢把緊繃放鬆。",
-          img: svgImage("伯爵奶茶磅蛋糕", "#8b6a55"),
-        },
-      ],
+      name: "薰衣草奶酥餅乾",
+      price: 220,
+      tag: "放鬆 / 舒壓",
+      theme: "lavender",
+      desc: "帶點花香與奶油的柔軟甜味，讓你慢慢把呼吸放回來。"
     },
-    stress_big: {
-      label: "😵 壓力大",
-      items: [
-        {
-          name: "薰衣草餅乾",
-          price: "NT$ 220",
-          desc: "淡淡薰衣草香，安撫焦躁、幫你把呼吸放慢。",
-          img: svgImage("薰衣草餅乾", "#9b8bd6"),
-        },
-        {
-          name: "海鹽可可曲奇",
-          price: "NT$ 240",
-          desc: "濃厚可可＋一點海鹽，給你穩定的安全感。",
-          img: svgImage("海鹽可可曲奇", "#6b4f3f"),
-        },
-      ],
+    overwhelm: {
+      name: "焦糖海鹽奶油塔",
+      price: 260,
+      tag: "安定 / 撫慰",
+      theme: "caramel",
+      desc: "甜與鹹的平衡像是給大腦一個「先停一下」的訊號。"
     },
-    hurt: {
-      label: "🥺 感傷",
-      items: [
-        {
-          name: "莓果奶油蛋糕",
-          price: "NT$ 320",
-          desc: "酸甜莓果像一句安慰：你已經很努力了。",
-          img: svgImage("莓果奶油蛋糕", "#f08aa7"),
-        },
-      ],
+    sad: {
+      name: "莓果雲朵戚風",
+      price: 280,
+      tag: "溫柔 / 陪伴",
+      theme: "berry",
+      desc: "輕盈口感配上酸甜莓果，像一句不打擾的安慰。"
     },
-    annoyed: {
-      label: "😤 煩躁",
-      items: [
-        {
-          name: "柚香氣泡飲",
-          price: "NT$ 160",
-          desc: "清爽氣泡把火氣先放掉一半。",
-          img: svgImage("柚香氣泡飲", "#87b6eb"),
-        },
-        {
-          name: "焦糖脆脆派塔",
-          price: "NT$ 250",
-          desc: "酥脆咬感很解壓，越嚼越冷靜。",
-          img: svgImage("焦糖脆脆派塔", "#c0896f"),
-        },
-      ],
+    angry: {
+      name: "濃可可布朗尼",
+      price: 240,
+      tag: "釋放 / 療癒",
+      theme: "cocoa",
+      desc: "厚實可可讓情緒有地方落地，慢慢把尖銳磨圓。"
     },
     calm: {
-      label: "🌿 安靜",
-      items: [
-        {
-          name: "抹茶白巧餅乾",
-          price: "NT$ 220",
-          desc: "微苦回甘，靜靜陪你把心放平。",
-          img: svgImage("抹茶白巧餅乾", "#7fbf8a"),
-        },
-      ],
+      name: "薄荷奶油飲",
+      price: 180,
+      tag: "清新 / 續航",
+      theme: "mint",
+      desc: "清清涼涼的節奏，適合你想維持平靜的今天。"
     },
     happy: {
-      label: "✨ 開心",
-      items: [
-        {
-          name: "香草草莓杯子蛋糕",
-          price: "NT$ 180",
-          desc: "可愛又甜甜的，讓好心情更完整。",
-          img: svgImage("香草草莓杯子蛋糕", "#f4a07a"),
-        },
-        {
-          name: "奶油拿鐵",
-          price: "NT$ 170",
-          desc: "暖暖一杯，把幸福續杯。",
-          img: svgImage("奶油拿鐵", "#8b6a55"),
-        },
-      ],
-    },
-  };
-
-  const clearActive = () => {
-    moodBar.querySelectorAll(".mood-btn").forEach(btn => btn.classList.remove("is-active"));
-  };
-
-  const setPulse = (btn) => {
-    btn.classList.remove("is-pulse");
-    // 觸發 reflow
-    void btn.offsetWidth;
-    btn.classList.add("is-pulse");
-  };
-
-  const renderPicked = (label) => {
-    pickedText.textContent = label;
-    pickedList.innerHTML = `
-      <li>${label}</li>
-    `;
-  };
-
-  const renderReco = (items) => {
-    recoGrid.innerHTML = "";
-    if (!items || items.length === 0) {
-      recoEmpty.style.display = "block";
-      return;
+      name: "柑橘奶油蛋糕",
+      price: 300,
+      tag: "明亮 / 加分",
+      theme: "citrus",
+      desc: "果香讓快樂更立體，像把好心情再往上推一點。"
     }
+  };
 
-    recoEmpty.style.display = "none";
+  const $buttons = document.getElementById("moodButtons");
+  const $preview = document.getElementById("previewPills");
+  const $reveal = document.getElementById("moodReveal");
 
-    items.forEach((it) => {
-      const card = document.createElement("article");
-      card.className = "section1";
-      card.innerHTML = `
-        <h2>${it.name}</h2>
+  const renderButtons = () => {
+    $buttons.innerHTML = moods.map(m => `
+      <button class="mood-pill" type="button" data-mood="${m.key}">
+        <span class="mood-emoji">${m.emoji}</span>
+        <span class="mood-text">${m.label}</span>
+      </button>
+    `).join("");
 
-        <div class="img-wrap">
-          <img src="${it.img}" alt="${it.name}">
-        </div>
+    // 同步預覽區(Interact)
+    $preview.innerHTML = moods.map(m => `
+      <div class="mood-pill ghost" data-mood="${m.key}">
+        <span class="mood-emoji">${m.emoji}</span>
+        <span class="mood-text">${m.label}</span>
+      </div>
+    `).join("");
+  };
 
-        <div class="dash"></div>
-
-        <p class="price">${it.price}</p>
-        <p class="mini">${it.desc || ""}</p>
-
-        <div class="btn-row">
-          <button class="action-btn primary" type="button">加入購物車</button>
-          <button class="action-btn" type="button">查看更多</button>
-        </div>
-      `;
-
-      const [btnCart, btnMore] = card.querySelectorAll("button");
-      btnCart.addEventListener("click", () => alert(`已加入購物車：${it.name}（示範）`));
-      btnMore.addEventListener("click", () => alert(`前往更多頁面（示範）：${it.name}`));
-
-      recoGrid.appendChild(card);
+  const setActive = (key) => {
+    document.querySelectorAll(".mood-pill").forEach(el => {
+      const isActive = el.dataset.mood === key;
+      el.classList.toggle("active", isActive);
+      el.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+    document.querySelectorAll(".mood-preview-pills .mood-pill").forEach(el => {
+      el.classList.toggle("active", el.dataset.mood === key);
     });
   };
 
-  moodBar.addEventListener("click", (e) => {
-    const btn = e.target.closest(".mood-btn");
-    if (!btn) return;
+  const renderReveal = (key) => {
+    const d = dessertByMood[key];
+    if (!d) return;
 
-    const key = btn.dataset.mood;
-    const pack = RECO[key];
-    if (!pack) return;
+    const photo = svgPhoto(d.theme);
 
-    clearActive();
-    btn.classList.add("is-active");
-    setPulse(btn);
+    $reveal.innerHTML = `
+      <div class="dessert-card" role="region" aria-label="甜點推薦">
+        <div class="dessert-photo" style="background-image:url('${photo}')"></div>
 
-    renderPicked(pack.label);
-    renderReco(pack.items);
-  });
+        <div class="dessert-body">
+          <div class="dessert-top">
+            <div class="dessert-name">${d.name}</div>
+            <div class="dessert-tag">${d.tag}</div>
+          </div>
 
-  // 語系下拉（示範，不改內容，只避免「按了沒反應」的感覺）
-  const langSelect = document.getElementById("langSelect");
-  if (langSelect) {
-    langSelect.addEventListener("change", () => {
-      alert("語系切換（示範）：目前先做介面，文字內容可之後再補。");
-      langSelect.value = "zh";
+          <div class="dessert-desc">${d.desc}</div>
+
+          <div class="dessert-bottom">
+            <div class="dessert-price">NT$ ${d.price}</div>
+            <a class="dessert-link" href="order.html">加入購物車 →</a>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // 小動畫：每次重建卡片都 reflow 一下再加 class
+    requestAnimationFrame(() => {
+      const card = $reveal.querySelector(".dessert-card");
+      if (card) card.classList.add("show");
     });
-  }
+  };
+
+  const onPick = (key) => {
+    setActive(key);
+    renderReveal(key);
+  };
+
+  const bind = () => {
+    $buttons.addEventListener("click", (e) => {
+      const btn = e.target.closest(".mood-pill");
+      if (!btn) return;
+      onPick(btn.dataset.mood);
+    });
+  };
+
+  // init
+  renderButtons();
+  bind();
 })();
