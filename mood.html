@@ -1,93 +1,147 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>心情選單｜Healing Dessert Studio</title>
-  <link rel="stylesheet" href="style2.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style2.css" />
 </head>
+
 <body>
+  <aside>
+    <h2>Healing Dessert Studio</h2>
+    <p class="slogan">奶油甜點・療癒日常</p>
 
-<aside>
-  <h2>Healing Dessert Studio</h2>
-  <p class="slogan">奶油甜點・療癒日常</p>
-  <nav>
-    <a href="index.html">🏠 首頁</a>
-    <a href="about.html">📖 公司起源</a>
-    <a href="giftbox.html">🎁 甜點禮盒</a>
-    <a href="mood.html">😊 心情選單</a>
-    <a href="colors.html">🌈 色彩療癒</a>
-    <a href="cakes.html">🍰 奶油蛋糕</a>
-    <a href="cookies.html">🍪 奶油餅乾</a>
-    <a href="pastries.html">🧁 奶油派塔</a>
-    <a href="drinks.html">☕ 奶油飲品</a>
-    <a href="workshop.html">📚 工作坊預約</a>
-    <a href="order.html">🛒 線上訂購</a>
-    <a href="source.html">🌿 品質來源</a>
-    <a href="award.html">🏆 榮獲獎項</a>
-    <a href="trace.html">🌾 供應商溯源</a>
-    <a href="report.html">📋 檢驗報告</a>
-    <a href="contactus.html">✉️ 聯繫我們</a>
-  </nav>
-</aside>
+    <nav>
+      <a href="index.html">🏠 首頁</a>
+      <a href="about.html">📖 公司起源</a>
+      <a href="giftbox.html">🎁 甜點禮盒</a>
+      <a href="mood.html">😊 心情選單</a>
+      <a href="colors.html">🌈 色彩療癒</a>
+      <a href="cakes.html">🍰 奶油蛋糕</a>
+      <a href="cookies.html">🍪 奶油餅乾</a>
+      <a href="pastries.html">🧁 奶油派塔</a>
+      <a href="drinks.html">☕ 奶油飲品</a>
+      <a href="workshop.html">📚 工作坊預約</a>
+      <a href="order.html">🛒 線上訂購</a>
+      <a href="source.html">🌿 品質來源</a>
+      <a href="award.html">🏆 榮獲獎項</a>
+      <a href="trace.html">🌾 供應商溯源</a>
+      <a href="report.html">📋 檢驗報告</a>
+      <a href="contactus.html">✉️ 聯繫我們</a>
+    </nav>
+  </aside>
 
-<div class="container">
-<header>
-  <h1>心情選單</h1>
-  <p class="tagline">跟著感受，選擇適合你的甜點</p>
-</header>
+  <div class="container">
+    <header>
+      <h1>您的心情，我們懂</h1>
+      <p class="tagline">直覺式的情緒對應甜點</p>
+    </header>
 
-<main>
-  <div class="page-image">
-    <img src="images/mood.jpg" alt="心情選單">
+    <main>
+      <section class="block">
+        <h1>特色體驗深度解析：心情選單（mood.html）</h1>
+        <div class="content">
+          <p class="mood-lead">
+            核心理念：<strong>「依照情緒狀態，選擇適合你的甜點。」</strong>
+          </p>
+
+          <!-- 三欄流程：Choose / Interact / Reveal -->
+          <div class="mood-flow">
+            <!-- Choose -->
+            <div class="mood-panel">
+              <div class="mood-panel-top">
+                <div class="mood-chip">mood.html</div>
+              </div>
+
+              <h2 class="mood-step-title">Choose</h2>
+              <p class="mood-step-sub">先選一個你現在的狀態</p>
+
+              <div class="mood-buttons" id="moodButtons">
+                <!-- JS 會自動塞按鈕 -->
+              </div>
+
+              <p class="mood-note">1. 使用者點擊代表心情的按鈕</p>
+            </div>
+
+            <!-- Interact -->
+            <div class="mood-panel mood-panel-center">
+              <div class="mood-panel-top">
+                <div class="mood-chip">mood.html</div>
+              </div>
+
+              <h2 class="mood-step-title">Interact</h2>
+              <p class="mood-step-sub">點擊後，按鈕會被高亮</p>
+
+              <div class="mood-preview" aria-hidden="true">
+                <div class="mood-preview-pills" id="previewPills">
+                  <!-- JS 會同步顯示按鈕樣式 -->
+                </div>
+                <div class="mood-js-badge">{JS}</div>
+              </div>
+
+              <p class="mood-note">Click! → 狀態互動（高亮/動畫）</p>
+            </div>
+
+            <!-- Reveal -->
+            <div class="mood-panel">
+              <div class="mood-panel-top">
+                <div class="mood-chip">mood.html</div>
+              </div>
+
+              <h2 class="mood-step-title">Reveal</h2>
+              <p class="mood-step-sub">我們會推薦一款甜點給你</p>
+
+              <div class="mood-reveal" id="moodReveal">
+                <div class="mood-empty">
+                  <div class="mood-empty-icon">🍮</div>
+                  <div class="mood-empty-text">
+                    <strong>先選一個心情</strong><br />
+                    推薦會在這裡出現
+                  </div>
+                </div>
+              </div>
+
+              <p class="mood-note">2. 頁面動態生成對應的甜點推薦</p>
+            </div>
+          </div>
+
+          <div class="mood-bottom">
+            <a class="mood-cta" href="order.html">🛒 直接前往線上訂購 →</a>
+            <span class="mood-hint">小提醒：推薦甜點僅供參考，也可以去「熱門甜點」看看！</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© Healing Dessert Studio 2025</p>
+    </footer>
   </div>
 
-  <section class="block">
-    <h1>從情緒出發</h1>
-    <div class="content">
-      情緒沒有對錯，
-      每一種感受都值得被理解。
-      我們希望透過甜點，
-      讓你在不同心情下都能找到陪伴。
-    </div>
-  </section>
+  <!-- =====================
+       🎵 全站共用音樂浮標
+  ===================== -->
+  <div class="bgm-fab">
+    <button class="bgm-btn" id="bgmBtn" type="button">
+      ♪ <span class="bgm-caret">▾</span>
+    </button>
 
-  <section class="block">
-    <h1>如何使用心情選單</h1>
-    <div class="content">
-      依照當下的感受選擇分類，
-      不需要理性分析，
-      只要相信自己的直覺即可。
-    </div>
-  </section>
-</main>
+    <div class="bgm-menu" id="bgmMenu">
+      <button class="bgm-item" id="bgmToggle">▶️ 播放</button>
+      <button class="bgm-item" id="bgmMute">🔇 靜音</button>
 
-<footer>
-  <p>© Healing Dessert Studio 2025</p>
-</footer>
-</div>
-<!-- 🎵 音樂浮標（全站共用） -->
-<div class="bgm-fab" id="bgmFab">
-  <button class="bgm-btn" id="bgmBtn" type="button">
-    ♪ <span class="bgm-caret">▾</span>
-  </button>
+      <div class="bgm-row">
+        <span class="bgm-label">音量</span>
+        <input id="bgmVolume" class="bgm-range"
+               type="range" min="0" max="1" step="0.01" value="0.5" />
+      </div>
 
-  <div class="bgm-menu" id="bgmMenu">
-    <button class="bgm-item" id="bgmToggle">▶️ 播放</button>
-    <button class="bgm-item" id="bgmMute">🔇 靜音</button>
-
-    <div class="bgm-row">
-      <span class="bgm-label">音量</span>
-      <input id="bgmVolume" class="bgm-range"
-             type="range" min="0" max="1" step="0.01" value="0.5">
-    </div>
-
-    <div class="bgm-hint">
-      提示：第一次點擊／滾動後才會開始播放
+      <div class="bgm-hint">提示：第一次點擊／滾動後才會開始播放</div>
     </div>
   </div>
-</div>
 
-<script src="bgm.js"></script>
-
+  <script src="bgm.js"></script>
+  <script src="mood.js"></script>
 </body>
 </html>
