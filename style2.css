@@ -1,9 +1,9 @@
-/* style2.css */
-
 /* =====================
    全站基礎設定
 ===================== */
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -13,8 +13,14 @@ body {
   line-height: 1.8;
 }
 
-a { text-decoration: none; color: #6b4f3f; }
-a:hover { color: #c0896f; }
+a {
+  text-decoration: none;
+  color: #6b4f3f;
+}
+
+a:hover {
+  color: #c0896f;
+}
 
 /* =====================
    側邊選單 Aside
@@ -50,11 +56,8 @@ aside nav a {
   border-radius: 8px;
 }
 
-aside nav a:hover { background-color: #ffe8d8; }
-
-aside nav a.active{
+aside nav a:hover {
   background-color: #ffe8d8;
-  font-weight: 700;
 }
 
 /* =====================
@@ -68,70 +71,24 @@ aside nav a.active{
 }
 
 /* =====================
-   Banner Header（符合 PDF：banner 圖 + 右上語系）
+   Header
 ===================== */
-.banner-header{
-  position: relative;
-  min-height: 220px;
-  background-image:
-    linear-gradient(rgba(255,243,230,0.85), rgba(255,250,242,0.95)),
-    url("images/banner.jpg");
-  background-size: cover;
-  background-position: center;
+header {
+  background: linear-gradient(#fff3e6, #fffaf2);
+  padding: 40px 20px 30px;
+  text-align: center;
 }
 
-.banner-overlay{
-  padding: 34px 20px 28px;
-}
-
-.banner-top{
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  gap: 18px;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.banner-title h1{
+header h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: #8b6a55;
-  letter-spacing: 0.5px;
 }
 
-.banner-sub{
-  margin: 10px 0 0;
-  color: #8b7355;
-  font-size: 1.05rem;
-}
-
-.banner-actions{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 4px;
-}
-
-.lang-wrap{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(234, 223, 212, 0.9);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.06);
-}
-
-.lang-label{ font-size: 16px; }
-.lang-select{
-  border: 0;
-  outline: none;
-  background: transparent;
-  color: #6b4f3f;
-  font-size: 14px;
-  cursor: pointer;
+header .tagline {
+  margin-top: 8px;
+  font-size: 1rem;
+  color: #a58c7a;
 }
 
 /* =====================
@@ -141,305 +98,129 @@ main {
   flex: 1;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 36px 20px 40px;
+  padding: 40px 20px;
 }
 
 /* =====================
-   白色內容卡片（block）
+   白色內容卡片（上方大說明）
 ===================== */
 .block {
   background-color: #ffffff;
-  border-radius: 26px;
+  border-radius: 28px;
   padding: 34px;
-  margin-bottom: 34px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.05);
 }
 
-.section-h2{
-  margin: 0;
-  font-size: 2.1rem;
+.block h1 {
+  margin-top: 0;
+  font-size: 1.6rem;
   color: #8b7355;
-  letter-spacing: 0.4px;
 }
 
-.section-desc{
-  margin: 12px 0 18px;
+.content {
   font-size: 1.05rem;
   color: #6b5a4a;
 }
 
-.step-note{
-  margin: 16px 0 0;
-  color: #8b6a55;
-  font-weight: 700;
-}
-
-/* =====================
-   心情按鈕列（可按、可高亮）
-===================== */
-.mood-bar{
+/* =================================================
+   🔹 下方「文字小卡」區（回到你原本的樣子）
+================================================= */
+.cards {
   display: flex;
+  gap: 32px;
   flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  padding: 6px 2px 2px;
+  justify-content: flex-start;
+  margin-bottom: 40px;
 }
 
-.mood-btn{
-  appearance: none;
-  border: 2px solid rgba(234, 223, 212, 0.95);
-  background: #fff;
-  color: #6b4f3f;
-  border-radius: 999px;
-  padding: 10px 16px;
-  font-size: 15px;
-  line-height: 1;
-  cursor: pointer;
-  user-select: none;
-  transition: transform 0.12s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+/* 純文字說明卡（沒有圖片的 card） */
+.card:not(:has(img)) {
+  width: 100%;
+  max-width: 360px;
+  padding: 28px 26px;
+  border-radius: 28px;
+  background-color: #ffffff;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.06);
 }
 
-.mood-btn:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 12px 26px rgba(0,0,0,0.07);
+.card:not(:has(img)) h2,
+.card:not(:has(img)) h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.25rem;
+  color: #f4a07a;
 }
 
-.mood-btn:active{
-  transform: translateY(0px) scale(0.98);
+.card:not(:has(img)) p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #6b5a4a;
 }
 
-.mood-btn.is-active{
-  background: #fff3e6;
-  border-color: rgba(192, 137, 111, 0.55);
-  box-shadow: 0 14px 34px rgba(0,0,0,0.10);
-}
-
-.mood-btn.is-pulse{
-  animation: pulse 380ms ease;
-}
-
-@keyframes pulse{
-  0%{ transform: translateY(-1px) scale(1.02); }
-  100%{ transform: translateY(0px) scale(1); }
-}
-
-/* =====================
-   Interact 區
-===================== */
-.interact-box{
+/* =================================================
+   🍰 產品卡片（有圖片的）
+================================================= */
+.card:has(img) {
+  width: 280px;
+  background-color: #ffffff;
   border-radius: 20px;
-  background: #fffaf2;
-  border: 1px solid rgba(234, 223, 212, 0.9);
-  padding: 18px 18px 14px;
+  padding: 16px;
+  box-shadow: 0 12px 26px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.interact-row{
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.card:has(img):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(0,0,0,0.08);
+}
+
+.card:has(img) h2,
+.card:has(img) h3 {
+  font-size: 1.05rem;
+  margin: 10px 0 6px;
+  color: #f4a07a;
+}
+
+.card:has(img) p {
+  font-size: 0.92rem;
+  color: #6b5a4a;
+}
+
+/* ===============================
+   🔥 圖片「強制 3:4 直式」
+=============================== */
+.card img,
+.card-img {
+  width: 100%;
+  aspect-ratio: 3 / 4 !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  border-radius: 14px;
+  display: block;
   margin-bottom: 10px;
 }
 
-.badge{
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: #fff;
-  border: 1px solid rgba(234, 223, 212, 0.9);
-  color: #8b6a55;
-  font-weight: 700;
-}
-
-.picked{
-  font-size: 18px;
-  color: #6b4f3f;
-}
-
-.picked-list{
-  margin: 10px 0 0;
-  padding-left: 18px;
-  color: #6b4f3f;
-}
-
-.picked-list .muted{
-  color: #a58c7a;
-}
-
-.click-hint{
-  margin-top: 12px;
-  color: #8b6a55;
-  font-weight: 800;
-}
-
 /* =====================
-   Reveal：推薦卡（符合 PDF 的 section1：H2 + 圖 + 虛線 + 價格 + 按鈕）
+   Footer
 ===================== */
-.reco-grid{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 22px;
-  margin-top: 6px;
-}
-
-.section1{
-  background: #fff;
-  border-radius: 22px;
-  padding: 18px;
-  flex: 1 1 calc(33.333% - 16px);
-  box-shadow: 0 12px 28px rgba(0,0,0,0.06);
-  border: 1px solid rgba(234, 223, 212, 0.65);
-  min-width: 260px;
-}
-
-.section1 h2{
-  margin: 2px 0 12px;
-  font-size: 1.25rem;
-  color: #f4a07a; /* 你的卡片粉橘 */
-}
-
-.section1 .img-wrap{
-  width: 100%;
-  border-radius: 18px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #fff3e6, #fffaf2);
-  border: 1px solid rgba(234, 223, 212, 0.65);
-}
-
-.section1 img{
-  width: 100%;
-  display: block;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
-
-.section1 .dash{
-  margin: 14px 0 12px;
-  border-top: 2px dashed rgba(192, 137, 111, 0.35);
-}
-
-.section1 .price{
-  font-size: 1.25rem;
-  font-weight: 900;
-  color: #87b6eb; /* 天藍 */
-  margin: 0 0 12px;
-}
-
-.section1 .mini{
-  margin: 0 0 12px;
-  color: #6b5a4a;
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.section1 .btn-row{
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.action-btn{
-  border: 0;
-  border-radius: 14px;
-  padding: 10px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  background: #f7f0ea;
-  color: #6b4f3f;
-  box-shadow: 0 10px 22px rgba(0,0,0,0.06);
-  transition: transform 0.12s ease, box-shadow 0.18s ease;
-}
-
-.action-btn:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 14px 28px rgba(0,0,0,0.09);
-}
-
-.action-btn.primary{
-  background: #ffe8d8;
-  font-weight: 800;
-}
-
-.reco-empty{
-  margin-top: 14px;
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: #fffaf2;
-  border: 1px solid rgba(234, 223, 212, 0.9);
-  color: #a58c7a;
-}
-
-/* =====================
-   Footer（符合 PDF：上下兩層）
-===================== */
-.footer-2{
+footer {
   background-color: #fff3e6;
-  color: #8b6a55;
-}
-
-.footer-top{
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 22px 20px 10px;
-  display: flex;
-  gap: 18px;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.footer-col{
-  min-width: 240px;
-  flex: 1 1 300px;
-}
-
-.footer-col h3{
-  margin: 0 0 10px;
-  font-size: 1rem;
-  color: #8b6a55;
-}
-
-.social-row{
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.pay-row{
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.pay-pill{
-  font-size: 12px;
-  padding: 7px 10px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.65);
-  border: 1px solid rgba(234,223,212,0.9);
-}
-
-.footer-bottom{
-  border-top: 1px solid rgba(234, 223, 212, 0.9);
   text-align: center;
-  padding: 14px 14px 18px;
-}
-
-.footer-links{
-  margin-top: 8px;
-  font-size: 0.92rem;
-}
-
-.footer-links .sep{
-  margin: 0 8px;
-  opacity: 0.8;
+  padding: 24px 16px;
+  font-size: 0.9rem;
+  color: #8b6a55;
 }
 
 /* =====================
    RWD
 ===================== */
 @media (max-width: 900px) {
-  .banner-top{ flex-direction: column; align-items: flex-start; }
-  .section1{ flex: 1 1 calc(50% - 12px); }
+  .card:has(img) {
+    width: calc(50% - 16px);
+  }
 }
 
 @media (max-width: 600px) {
@@ -448,25 +229,33 @@ main {
     width: 100%;
     height: auto;
   }
-  .container { margin-left: 0; }
-  .banner-header{ min-height: 200px; }
-  .banner-title h1{ font-size: 1.55rem; }
-  .section1{ flex: 1 1 100%; }
+
+  .container {
+    margin-left: 0;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  .card:has(img),
+  .card:not(:has(img)) {
+    width: 100%;
+  }
 }
 
-/* =========================================================
-   ✅ BGM 浮標（保留你原本的）
-========================================================= */
-.bgm-fab{
+/* =================================================
+   🎵 BGM 浮標（保留）
+================================================= */
+.bgm-fab {
   position: fixed;
   right: 22px;
   bottom: 22px;
   z-index: 99999;
   pointer-events: auto;
-  font-family: inherit;
 }
 
-.bgm-btn{
+.bgm-btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -480,66 +269,8 @@ main {
   color: #6b4f3f;
   cursor: pointer;
   font-size: 20px;
-  line-height: 1;
-  user-select: none;
 }
 
-.bgm-btn:active{ transform: translateY(1px); }
-
-.bgm-caret{
-  font-size: 14px;
-  opacity: 0.75;
-  transform: translateY(1px);
-}
-
-.bgm-menu{
-  position: absolute;
-  right: 0;
-  bottom: 64px;
-  width: 280px;
-  padding: 12px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.16);
-  border: 1px solid rgba(234, 223, 212, 0.8);
+.bgm-menu {
   display: none;
-}
-
-.bgm-menu.open{ display: block; }
-
-.bgm-item{
-  width: 100%;
-  border: 0;
-  border-radius: 14px;
-  padding: 12px 14px;
-  margin: 6px 0;
-  background: #f7f0ea;
-  color: #6b4f3f;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-.bgm-item:hover{ background: #f1e6dd; }
-
-.bgm-row{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  padding: 8px 6px 2px;
-}
-
-.bgm-label{
-  font-size: 14px;
-  color: #8b6a55;
-  width: 44px;
-}
-
-.bgm-range{ width: 100%; }
-
-.bgm-hint{
-  margin-top: 10px;
-  font-size: 12px;
-  color: #a58c7a;
-  line-height: 1.4;
 }
