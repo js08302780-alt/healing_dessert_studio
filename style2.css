@@ -50,6 +50,11 @@ aside nav a {
 
 aside nav a:hover { background-color: #ffe8d8; }
 
+aside nav a.active{
+  background-color: #ffe8d8;
+  font-weight: 700;
+}
+
 /* =====================
    主容器
 ===================== */
@@ -110,7 +115,7 @@ main {
 }
 
 /* =====================
-   白色內容卡片
+   白色內容卡片（article / block）
 ===================== */
 .block {
   background-color: #ffffff;
@@ -132,7 +137,7 @@ main {
 }
 
 /* =====================
-   Cards 區塊
+   Cards 區塊（首頁用）
 ===================== */
 .cards {
   display: flex;
@@ -176,6 +181,135 @@ main {
 }
 
 /* =====================
+   ✅ mood.html：Choose / Interact / Reveal（可點版本）
+===================== */
+.mood-toolbar{
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mood-pill{
+  appearance: none;
+  border: 1px solid rgba(234, 223, 212, 0.95);
+  background: #ffffff;
+  color: #6b4f3f;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.mood-pill:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.mood-pill.active{
+  background: #ffe8d8;
+  border-color: #f2d3bf;
+  font-weight: 700;
+}
+
+.step-note{
+  margin-top: 16px;
+  font-size: 0.95rem;
+  color: #8b6a55;
+}
+
+.mood-log{
+  margin: 14px 0 0;
+  padding-left: 20px;
+  color: #6b5a4a;
+}
+
+.mood-log .hint{
+  margin-top: 10px;
+  color: #a58c7a;
+}
+
+/* Reveal 區：符合你文件說的 section1 一排最多三個、會自動換行 :contentReference[oaicite:1]{index=1} */
+.reveal-grid{
+  margin-top: 14px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* 這個就是文件的 section1：標題 + 圖片 + 虛線 + 價格 + 按鈕 :contentReference[oaicite:2]{index=2} */
+.section1{
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px;
+  flex: 1 1 calc(33.333% - 16px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+}
+
+.section1 h2{
+  margin: 0 0 10px;
+  font-size: 1.25rem;
+  color: #f4a07a; /* 粉橘（你的文件要求） */
+}
+
+.section1 .img{
+  width: 100%;
+  border-radius: 16px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #f7f0ea;
+  display: block;
+}
+
+.section1 .img img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.section1 .dash{
+  margin: 14px 0;
+  border-top: 2px dashed rgba(234, 223, 212, 0.9);
+}
+
+.section1 .price{
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #87a8eb; /* 天藍（文件同款概念） */
+  margin-bottom: 10px;
+}
+
+.section1 .desc{
+  margin: 0 0 12px;
+  color: #6b5a4a;
+  font-size: 0.95rem;
+}
+
+.section1 .btn-row{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.section1 .action-btn{
+  border: 0;
+  border-radius: 14px;
+  padding: 10px 12px;
+  cursor: pointer;
+  background: #f7f0ea;
+  color: #6b4f3f;
+  font-size: 14px;
+}
+
+.section1 .action-btn:hover{
+  background: #f1e6dd;
+}
+
+/* =====================
    Footer
 ===================== */
 footer {
@@ -191,6 +325,7 @@ footer {
 ===================== */
 @media (max-width: 900px) {
   .card { flex: 1 1 calc(50% - 12px); }
+  .section1 { flex: 1 1 calc(50% - 12px); }
 }
 
 @media (max-width: 600px) {
@@ -202,10 +337,11 @@ footer {
   .container { margin-left: 0; }
   header h1 { font-size: 1.8rem; }
   .card { flex: 1 1 100%; }
+  .section1 { flex: 1 1 100%; }
 }
 
 /* =========================================================
-   ✅ BGM 浮標（只新增這段，不會影響你的版面）
+   ✅ BGM 浮標（保留你原本的）
 ========================================================= */
 .bgm-fab{
   position: fixed;
@@ -292,296 +428,4 @@ footer {
   font-size: 12px;
   color: #a58c7a;
   line-height: 1.4;
-}
-
-/* =========================================================
-   ✅ mood.html：Choose / Interact / Reveal（三欄互動）
-   （只新增，不影響其他頁）
-========================================================= */
-.mood-lead{
-  margin: 0 0 18px;
-  padding: 14px 16px;
-  border-radius: 14px;
-  background: #fff6ec;
-  border: 1px solid #eadfd4;
-  color: #6b5a4a;
-}
-
-.mood-flow{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 22px;
-  margin-top: 18px;
-}
-
-.mood-panel{
-  background: #fbf6f1;
-  border: 1px solid rgba(234, 223, 212, 0.9);
-  border-radius: 20px;
-  padding: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.04);
-  position: relative;
-  overflow: hidden;
-}
-
-.mood-panel-top{
-  display: flex;
-  justify-content: flex-start;
-  margin-bottom: 10px;
-}
-
-.mood-chip{
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  color: #8b6a55;
-  background: rgba(255,255,255,0.85);
-  border: 1px solid rgba(234, 223, 212, 0.9);
-}
-
-.mood-step-title{
-  margin: 6px 0 2px;
-  font-size: 1.25rem;
-  color: #3f3a35;
-  letter-spacing: 0.2px;
-}
-
-.mood-step-sub{
-  margin: 0 0 12px;
-  font-size: 0.92rem;
-  color: #8b6a55;
-}
-
-.mood-buttons{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 8px 2px 2px;
-}
-
-.mood-pill{
-  border: 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border-radius: 999px;
-  background: #eadfd4;
-  color: #6b5a4a;
-  font-size: 14px;
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.06);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-  user-select: none;
-}
-
-.mood-pill:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 10px 18px rgba(0,0,0,0.08);
-  background: #e6d4c5;
-}
-
-.mood-pill:active{
-  transform: translateY(0);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.10);
-}
-
-.mood-pill .mood-emoji{
-  font-size: 16px;
-  transform: translateY(1px);
-}
-
-.mood-pill.active{
-  background: #8b6a55;
-  color: #fff;
-  box-shadow: 0 12px 22px rgba(139,106,85,0.25);
-}
-
-.mood-pill.ghost{
-  pointer-events: none;
-  opacity: 0.95;
-}
-
-.mood-note{
-  margin: 12px 0 0;
-  font-size: 0.86rem;
-  color: #8b6a55;
-}
-
-.mood-preview{
-  position: relative;
-  min-height: 160px;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.6);
-  border: 1px dashed rgba(234, 223, 212, 0.95);
-  padding: 14px;
-}
-
-.mood-preview-pills{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.mood-js-badge{
-  position: absolute;
-  right: 12px;
-  top: 10px;
-  font-weight: 700;
-  font-size: 12px;
-  color: #8b6a55;
-  background: rgba(255,255,255,0.9);
-  border: 1px solid rgba(234, 223, 212, 0.9);
-  padding: 6px 10px;
-  border-radius: 12px;
-}
-
-.mood-reveal{
-  min-height: 230px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 18px;
-  background: rgba(255,255,255,0.6);
-  border: 1px dashed rgba(234, 223, 212, 0.95);
-  padding: 14px;
-}
-
-.mood-empty{
-  text-align: center;
-  color: #8b6a55;
-}
-
-.mood-empty-icon{
-  font-size: 34px;
-  margin-bottom: 8px;
-}
-
-.mood-empty-text{
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-.dessert-card{
-  width: 100%;
-  max-width: 360px;
-  border-radius: 18px;
-  overflow: hidden;
-  background: #fff;
-  border: 1px solid rgba(234, 223, 212, 0.95);
-  box-shadow: 0 16px 38px rgba(0,0,0,0.10);
-  transform: translateY(6px);
-  opacity: 0;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.dessert-card.show{
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.dessert-photo{
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background-size: cover;
-  background-position: center;
-}
-
-.dessert-body{
-  padding: 14px 14px 12px;
-}
-
-.dessert-top{
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.dessert-name{
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #8b6a55;
-}
-
-.dessert-tag{
-  font-size: 12px;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: #fff6ec;
-  border: 1px solid rgba(234, 223, 212, 0.95);
-  color: #8b6a55;
-  white-space: nowrap;
-}
-
-.dessert-desc{
-  margin-top: 8px;
-  font-size: 0.92rem;
-  color: #6b5a4a;
-  line-height: 1.55;
-}
-
-.dessert-bottom{
-  margin-top: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.dessert-price{
-  font-weight: 900;
-  color: #6aa7b4;
-  font-size: 1.05rem;
-}
-
-.dessert-link{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: #f7f0ea;
-  color: #6b4f3f;
-  font-size: 14px;
-  border: 1px solid rgba(234, 223, 212, 0.95);
-}
-
-.dessert-link:hover{
-  background: #f1e6dd;
-}
-
-.mood-bottom{
-  margin-top: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.mood-cta{
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: #8b6a55;
-  color: #fff;
-  font-weight: 800;
-}
-
-.mood-cta:hover{ opacity: 0.92; }
-
-.mood-hint{
-  font-size: 0.9rem;
-  color: #a58c7a;
-}
-
-/* mood RWD */
-@media (max-width: 980px){
-  .mood-flow{ grid-template-columns: 1fr; }
-  .dessert-card{ max-width: 520px; }
 }
