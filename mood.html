@@ -1,3 +1,4 @@
+<!-- mood.html -->
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -8,7 +9,7 @@
 </head>
 
 <body>
-  <!-- Aside -->
+
   <aside>
     <h2>Healing Dessert Studio</h2>
     <p class="slogan">奶油甜點・療癒日常</p>
@@ -17,7 +18,7 @@
       <a href="index.html">🏠 首頁</a>
       <a href="about.html">📖 公司起源</a>
       <a href="giftbox.html">🎁 甜點禮盒</a>
-      <a href="mood.html" class="active">😊 心情選單</a>
+      <a class="active" href="mood.html">😊 心情選單</a>
       <a href="colors.html">🌈 色彩療癒</a>
       <a href="cakes.html">🍰 奶油蛋糕</a>
       <a href="cookies.html">🍪 奶油餅乾</a>
@@ -34,78 +35,123 @@
   </aside>
 
   <div class="container">
-    <!-- Header -->
-    <header>
-      <h1>心情選單</h1>
-      <p class="tagline">依照情緒狀態，選擇適合你的甜點</p>
+
+    <!-- Header：banner + 語系下拉（PDF 規格） -->
+    <header class="banner-header">
+      <div class="banner-overlay">
+        <div class="banner-top">
+          <div class="banner-title">
+            <h1>特色體驗深度解析：心情選單（mood.html）</h1>
+            <p class="banner-sub">核心理念：「依照情緒狀態，選擇適合你的甜點。」</p>
+          </div>
+
+          <div class="banner-actions">
+            <label class="lang-wrap" aria-label="語系切換">
+              <span class="lang-label">🌐</span>
+              <select class="lang-select" id="langSelect">
+                <option value="zh" selected>中文</option>
+                <option value="en">English</option>
+              </select>
+            </label>
+          </div>
+        </div>
+      </div>
     </header>
 
-    <!-- Main -->
     <main>
-      <!-- 說明卡（符合你文件的 article/h1+content 形式） -->
-      <article class="block">
-        <h1>特色體驗深度解析：心情選單（mood.html）</h1>
-        <div class="content">
-          核心理念：<strong>「依照情緒狀態，選擇適合你的甜點。」</strong><br/>
-          點選下面的心情按鈕後，按鈕會高亮，並在下方動態生成一張「對應甜點推薦卡」。
-        </div>
-      </article>
 
-      <!-- Choose -->
+      <!-- Intro -->
       <section class="block">
-        <h1>Choose</h1>
-        <div class="content">先選一個你現在的狀態</div>
+        <h2 class="section-h2">Choose</h2>
+        <p class="section-desc">先選一個你現在的狀態</p>
 
-        <div class="mood-toolbar" id="moodToolbar" aria-label="心情按鈕列">
-          <button class="mood-pill" type="button" data-mood="pressure">😮‍💨 壓力</button>
-          <button class="mood-pill" type="button" data-mood="pressureBig">😵 壓力大</button>
-          <button class="mood-pill" type="button" data-mood="sad">🥺 感傷</button>
-          <button class="mood-pill" type="button" data-mood="annoyed">😤 煩躁</button>
-          <button class="mood-pill" type="button" data-mood="calm">🌿 安靜</button>
-          <button class="mood-pill" type="button" data-mood="happy">✨ 開心</button>
+        <div class="mood-bar" id="moodBar" aria-label="心情按鈕列">
+          <button type="button" class="mood-btn" data-mood="stress">😮‍💨 壓力</button>
+          <button type="button" class="mood-btn" data-mood="stress_big">😵 壓力大</button>
+          <button type="button" class="mood-btn" data-mood="hurt">🥺 感傷</button>
+          <button type="button" class="mood-btn" data-mood="annoyed">😤 煩躁</button>
+          <button type="button" class="mood-btn" data-mood="calm">🌿 安靜</button>
+          <button type="button" class="mood-btn" data-mood="happy">✨ 開心</button>
         </div>
 
-        <div class="step-note">1. 使用者點擊代表心情的按鈕</div>
+        <p class="step-note">1. 使用者點擊代表心情的按鈕</p>
       </section>
 
       <!-- Interact -->
       <section class="block">
-        <h1>Interact</h1>
-        <div class="content">點擊後，按鈕會被高亮（動畫／狀態）</div>
+        <h2 class="section-h2">Interact</h2>
+        <p class="section-desc">點擊後，按鈕會被高亮（動畫 / 狀態）</p>
 
-        <ul class="mood-log" id="moodLog">
-          <li>😮‍💨 壓力</li>
-          <li>😵 壓力大</li>
-          <li>🥺 感傷</li>
-          <li>😤 煩躁</li>
-          <li>🌿 安靜</li>
-          <li>✨ 開心</li>
-          <li class="hint">（請點上面的按鈕試試看）</li>
-        </ul>
+        <div class="interact-box">
+          <div class="interact-row">
+            <span class="badge">你選的是</span>
+            <strong class="picked" id="pickedText">（尚未選擇）</strong>
+          </div>
 
-        <div class="step-note">Click! → 狀態互動（高亮／動畫）</div>
+          <ul class="picked-list" id="pickedList" aria-live="polite">
+            <li class="muted">（請點上面的按鈕試試看）</li>
+          </ul>
+
+          <div class="click-hint">Click! → 狀態互動（高亮 / 動畫）</div>
+        </div>
       </section>
 
       <!-- Reveal -->
       <section class="block">
-        <h1>Reveal</h1>
-        <div class="content">頁面動態生成對應的甜點推薦</div>
+        <h2 class="section-h2">Reveal</h2>
+        <p class="section-desc">頁面動態生成對應的甜點推薦（section1）</p>
 
-        <!-- 這裡會由 JS 動態塞入 section1 卡片 -->
-        <div class="reveal-grid" id="recommendationArea"></div>
+        <!-- 這裡會被 JS 動態塞入 section1 卡片 -->
+        <div class="reco-grid" id="recoGrid" aria-label="心情推薦清單"></div>
 
-        <div class="step-note">2. 動態生成「對應甜點推薦卡」</div>
+        <div class="reco-empty" id="recoEmpty">
+          你還沒選心情～先點上面的按鈕，我才知道要推薦什麼 ☁️
+        </div>
       </section>
+
     </main>
 
-    <footer>
-      <p>© Healing Dessert Studio 2025</p>
+    <footer class="footer-2">
+      <div class="footer-top">
+        <div class="footer-col">
+          <h3>聯繫資訊</h3>
+          <p><a href="tel:+886900000000">📞 0900-000-000</a></p>
+          <p><a href="mailto:healingdessertstudio@email.com">✉️ healingdessertstudio@email.com</a></p>
+        </div>
+
+        <div class="footer-col">
+          <h3>社群連結</h3>
+          <div class="social-row">
+            <a href="#" aria-label="Facebook">📘 Facebook</a>
+            <a href="#" aria-label="Instagram">📷 Instagram</a>
+            <a href="#" aria-label="Line">💚 Line</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3>支付方式</h3>
+          <div class="pay-row" aria-label="支付方式">
+            <span class="pay-pill">💳 Visa</span>
+            <span class="pay-pill">💳 Master</span>
+            <span class="pay-pill">🧾 JCB</span>
+            <span class="pay-pill">📱 Line Pay</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="copyright">© Healing Dessert Studio 2025</div>
+        <div class="footer-links">
+          <a href="#">服務條款</a><span class="sep">｜</span>
+          <a href="#">隱私政策</a><span class="sep">｜</span>
+          <a href="#">購買須知</a>
+        </div>
+      </div>
     </footer>
+
   </div>
 
-  <!-- =====================
-       🎵 全站共用音樂浮標
-  ===================== -->
+  <!-- 🎵 全站共用音樂浮標（你原本的） -->
   <div class="bgm-fab">
     <button class="bgm-btn" id="bgmBtn" type="button">
       ♪ <span class="bgm-caret">▾</span>
@@ -117,14 +163,13 @@
 
       <div class="bgm-row">
         <span class="bgm-label">音量</span>
-        <input id="bgmVolume" class="bgm-range" type="range" min="0" max="1" step="0.01" value="0.5">
+        <input id="bgmVolume" class="bgm-range" type="range" min="0" max="1" step="0.01" value="0.5" />
       </div>
 
       <div class="bgm-hint">提示：第一次點擊／滾動後才會開始播放</div>
     </div>
   </div>
 
-  <!-- JS（順序不要改） -->
   <script src="bgm.js"></script>
   <script src="mood.js"></script>
 </body>
