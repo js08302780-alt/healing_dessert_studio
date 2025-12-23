@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  <!-- Aside -->
   <aside>
     <h2>Healing Dessert Studio</h2>
     <p class="slogan">奶油甜點・療癒日常</p>
@@ -16,7 +17,7 @@
       <a href="index.html">🏠 首頁</a>
       <a href="about.html">📖 公司起源</a>
       <a href="giftbox.html">🎁 甜點禮盒</a>
-      <a href="mood.html">😊 心情選單</a>
+      <a href="mood.html" class="active">😊 心情選單</a>
       <a href="colors.html">🌈 色彩療癒</a>
       <a href="cakes.html">🍰 奶油蛋糕</a>
       <a href="cookies.html">🍪 奶油餅乾</a>
@@ -33,84 +34,67 @@
   </aside>
 
   <div class="container">
+    <!-- Header -->
     <header>
-      <h1>您的心情，我們懂</h1>
-      <p class="tagline">直覺式的情緒對應甜點</p>
+      <h1>心情選單</h1>
+      <p class="tagline">依照情緒狀態，選擇適合你的甜點</p>
     </header>
 
+    <!-- Main -->
     <main>
-      <section class="block">
+      <!-- 說明卡（符合你文件的 article/h1+content 形式） -->
+      <article class="block">
         <h1>特色體驗深度解析：心情選單（mood.html）</h1>
         <div class="content">
-          <p class="mood-lead">
-            核心理念：<strong>「依照情緒狀態，選擇適合你的甜點。」</strong>
-          </p>
-
-          <!-- 三欄流程：Choose / Interact / Reveal -->
-          <div class="mood-flow">
-            <!-- Choose -->
-            <div class="mood-panel">
-              <div class="mood-panel-top">
-                <div class="mood-chip">mood.html</div>
-              </div>
-
-              <h2 class="mood-step-title">Choose</h2>
-              <p class="mood-step-sub">先選一個你現在的狀態</p>
-
-              <div class="mood-buttons" id="moodButtons">
-                <!-- JS 會自動塞按鈕 -->
-              </div>
-
-              <p class="mood-note">1. 使用者點擊代表心情的按鈕</p>
-            </div>
-
-            <!-- Interact -->
-            <div class="mood-panel mood-panel-center">
-              <div class="mood-panel-top">
-                <div class="mood-chip">mood.html</div>
-              </div>
-
-              <h2 class="mood-step-title">Interact</h2>
-              <p class="mood-step-sub">點擊後，按鈕會被高亮</p>
-
-              <div class="mood-preview" aria-hidden="true">
-                <div class="mood-preview-pills" id="previewPills">
-                  <!-- JS 會同步顯示按鈕樣式 -->
-                </div>
-                <div class="mood-js-badge">{JS}</div>
-              </div>
-
-              <p class="mood-note">Click! → 狀態互動（高亮/動畫）</p>
-            </div>
-
-            <!-- Reveal -->
-            <div class="mood-panel">
-              <div class="mood-panel-top">
-                <div class="mood-chip">mood.html</div>
-              </div>
-
-              <h2 class="mood-step-title">Reveal</h2>
-              <p class="mood-step-sub">我們會推薦一款甜點給你</p>
-
-              <div class="mood-reveal" id="moodReveal">
-                <div class="mood-empty">
-                  <div class="mood-empty-icon">🍮</div>
-                  <div class="mood-empty-text">
-                    <strong>先選一個心情</strong><br />
-                    推薦會在這裡出現
-                  </div>
-                </div>
-              </div>
-
-              <p class="mood-note">2. 頁面動態生成對應的甜點推薦</p>
-            </div>
-          </div>
-
-          <div class="mood-bottom">
-            <a class="mood-cta" href="order.html">🛒 直接前往線上訂購 →</a>
-            <span class="mood-hint">小提醒：推薦甜點僅供參考，也可以去「熱門甜點」看看！</span>
-          </div>
+          核心理念：<strong>「依照情緒狀態，選擇適合你的甜點。」</strong><br/>
+          點選下面的心情按鈕後，按鈕會高亮，並在下方動態生成一張「對應甜點推薦卡」。
         </div>
+      </article>
+
+      <!-- Choose -->
+      <section class="block">
+        <h1>Choose</h1>
+        <div class="content">先選一個你現在的狀態</div>
+
+        <div class="mood-toolbar" id="moodToolbar" aria-label="心情按鈕列">
+          <button class="mood-pill" type="button" data-mood="pressure">😮‍💨 壓力</button>
+          <button class="mood-pill" type="button" data-mood="pressureBig">😵 壓力大</button>
+          <button class="mood-pill" type="button" data-mood="sad">🥺 感傷</button>
+          <button class="mood-pill" type="button" data-mood="annoyed">😤 煩躁</button>
+          <button class="mood-pill" type="button" data-mood="calm">🌿 安靜</button>
+          <button class="mood-pill" type="button" data-mood="happy">✨ 開心</button>
+        </div>
+
+        <div class="step-note">1. 使用者點擊代表心情的按鈕</div>
+      </section>
+
+      <!-- Interact -->
+      <section class="block">
+        <h1>Interact</h1>
+        <div class="content">點擊後，按鈕會被高亮（動畫／狀態）</div>
+
+        <ul class="mood-log" id="moodLog">
+          <li>😮‍💨 壓力</li>
+          <li>😵 壓力大</li>
+          <li>🥺 感傷</li>
+          <li>😤 煩躁</li>
+          <li>🌿 安靜</li>
+          <li>✨ 開心</li>
+          <li class="hint">（請點上面的按鈕試試看）</li>
+        </ul>
+
+        <div class="step-note">Click! → 狀態互動（高亮／動畫）</div>
+      </section>
+
+      <!-- Reveal -->
+      <section class="block">
+        <h1>Reveal</h1>
+        <div class="content">頁面動態生成對應的甜點推薦</div>
+
+        <!-- 這裡會由 JS 動態塞入 section1 卡片 -->
+        <div class="reveal-grid" id="recommendationArea"></div>
+
+        <div class="step-note">2. 動態生成「對應甜點推薦卡」</div>
       </section>
     </main>
 
@@ -133,14 +117,14 @@
 
       <div class="bgm-row">
         <span class="bgm-label">音量</span>
-        <input id="bgmVolume" class="bgm-range"
-               type="range" min="0" max="1" step="0.01" value="0.5" />
+        <input id="bgmVolume" class="bgm-range" type="range" min="0" max="1" step="0.01" value="0.5">
       </div>
 
       <div class="bgm-hint">提示：第一次點擊／滾動後才會開始播放</div>
     </div>
   </div>
 
+  <!-- JS（順序不要改） -->
   <script src="bgm.js"></script>
   <script src="mood.js"></script>
 </body>
